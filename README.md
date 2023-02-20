@@ -100,15 +100,17 @@ SQL to KQL cheat sheets - aka.ms/SQL2KQL
 
 1 min aggregrated view is present from session and flow tables.
 
-## Challenge 2: Query 1.1 : User is interested to view the records in 1min agregrated enriched flow table where application is not empty
+## Challenge 2: Query 1.1 : User is interested to view the records in 1min agregrated enriched flow table where application is not empty and able to view only session id, uplinkOctets, downlink octets value with event time window start and end details
 
 KQL queries can be used to filter data and return specific information. Now, you'll learn how to choose specific rows of data.
-The where operator filters results that satisfy a certain condition.
+The where operator filters results that satisfy a certain condition- 
+
+To get desired columns project operator is used: project operator - https://learn.microsoft.com/en-us/azure/data-explorer/kusto/query/projectoperator
        
 enriched_flow_agg_1_min        
         | where flowRecord_dpiStringInfo_application != ''
-        | project flowRecord_keys_sessionId,flowRecord_dataStats_upLinkOctets, flowRecord_dataStats_downLinkOctets, flowRecord_dpiStringInfo_application
-       
+        | project eventTimeWindowStart,eventTimeWindowEnd, flowRecord_keys_sessionId,flowRecord_dataStats_upLinkOctets, flowRecord_dataStats_downLinkOctets,  flowRecord_dpiStringInfo_application
+      
 
 The 'take' operator samples any number of records from our table without any order. In the above example, we asked to provide 10 random records.
 
