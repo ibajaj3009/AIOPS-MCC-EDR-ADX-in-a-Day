@@ -75,11 +75,11 @@ all_flow_events
 | take 10 
 This query has a single tabular expression statement. The statement begins with a reference to the table logsRaw and contains the operators take. Each operator is separated by a pipe.
 
-## References:
+### References:
 
 KQL cheat sheets
 
-Challenge 2: Task 0 : Journey from SQL to KQL!
+## Challenge 2: Task 0 : Journey from SQL to KQL!
 
 The primary language to interact with Kusto is KQL (Kusto Query Language). To make the transition and learning experience easier, you can use 'explain' operator to translate SQL queries to KQL.
 
@@ -90,6 +90,10 @@ all_session_events
 | project recordType
 | take int(10)
 
-References:
+### References:
 
 SQL to KQL cheat sheets - aka.ms/SQL2KQL
+
+## Challenge 2: Task 1 : Basic KQL queries-explore the data
+
+
