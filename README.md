@@ -1,6 +1,6 @@
-# AIOPS-MCC-EDR-ADX-in-a-Day
+# AIOPS MCC EDR Azure Data Explorer in a day
 
-Challenge 1, Task 3: Ingest data from Azure Storage Account
+## Challenge 1, Task 3: Ingest data from Azure Storage Account
 
 Data ingestion to ADX is the process used to load data records from one or more sources into a table in your ADX cluster. Once ingested, the data becomes available for query.
 
@@ -8,7 +8,8 @@ ADX supports several ingestion methods, including ingestion tools, connectors an
 
 
 Before starting this task, 
-What is a Kusto query?
+
+## What is a Kusto query?
 Azure Data Explorer provides a web experience that enables you to connect to your Azure Data Explorer clusters and write and run Kusto Query Language queries. 
 
 1. The web experience is available in the Azure portal and as a stand-alone web application, the Azure Data Explorer Web UI, which we will use later.
@@ -19,13 +20,13 @@ Expected Learning Outcomes:
 
 Ingest data using one-click ingestion from Azure Blob Storage to your ADX cluster.
 
-Challenge 3, Task 3.1: Create the raw table -logsRaw
+## Challenge 1, Task 3.1: Create the raw table -logsRaw
 
 Run the following command to create table:
 
 .create table logsRaw(Timestamp:datetime, Source:string, Node:string, Level:string, Component:string, ClientRequestId:string, Message:string, Properties:dynamic) 
 
-Challenge 1, Task 3.2: Use the “One-click” UI (User Interface) to ingest data from Azure blob storage
+## Challenge 1, Task 3.2: Use the “One-click” UI (User Interface) to ingest data from Azure blob storage
 You need to analyze the logs for Contoso, which are stored in Azure blob storage.
 Go back to the My Cluster page, click the Ingest button
 <img width="506" alt="image" src="https://user-images.githubusercontent.com/78459999/220137856-248fb10f-7289-4c04-9e6d-47a43f7507b2.png">
@@ -51,5 +52,44 @@ Go to the Query page. Run the following KQL query to verify that data was ingest
 logsRaw
   | count
 
+## Challenge 2 : Basics of KQL and Advanced KQL( run on the customer EDR Subscription resource for ADX)
 
+Learn how to write KQL queries to explore and gain insights from your data
 
+Expected Learning Outcomes:
+
+1. Learn how to write queries with KQL
+2. Use KQL to explore data by using the most common operators
+
+## What is a Kusto query? 
+A Kusto query is a read-only request to process data and return results. The request is stated in plain text that's easy to read, author, and automate. A Kusto query has one or more query statements and returns data in a tabular or graph format.
+
+## What is a tabular statement? 
+The most common kind of query statement is a tabular expression statement. Both its input and its output consist of tables or tabular datasets.
+
+Tabular statements contain zero or more operators. Each operator starts with a tabular input and returns a tabular output. Operators are sequenced by a pipe (|). Data flows, or is piped, from one operator to the next. The data is filtered or manipulated at each step and then fed into the following step.
+
+It's like a funnel, where you start out with an entire data table. Each time the data passes through another operator, it's filtered, rearranged, or summarized. Because the piping of information from one operator to another is sequential, the query's operator order is important. At the end of the funnel, you're left with a refined output. Let's look at an example query:
+
+all_flow_events
+| take 10 
+This query has a single tabular expression statement. The statement begins with a reference to the table logsRaw and contains the operators take. Each operator is separated by a pipe.
+
+## References:
+
+KQL cheat sheets
+
+Challenge 2: Task 0 : Journey from SQL to KQL!
+
+The primary language to interact with Kusto is KQL (Kusto Query Language). To make the transition and learning experience easier, you can use 'explain' operator to translate SQL queries to KQL.
+
+explain select top 10 recordType from all_session_events 
+
+Output of the above query will be a corresponsing KQL query
+all_session_events
+| project recordType
+| take int(10)
+
+References:
+
+SQL to KQL cheat sheets - aka.ms/SQL2KQL
