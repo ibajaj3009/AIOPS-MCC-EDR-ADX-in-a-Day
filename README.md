@@ -76,13 +76,12 @@ In this Challenge, you will create a Free cluster and a database. You will run s
 
 Create and work with Free ADX cluster.
 
-### Challenge 1, Task 1: Create an ADX cluster and Database
+### Challenge 1, Task 1: Create an ADX cluster and Database and review the free cluster home page and the Azure Data Explorer Web UI
 
 Create your free cluster and database here: https://aka.ms/kustofree.
 
 <img width="515" alt="image" src="https://user-images.githubusercontent.com/78459999/220317774-d3de5eba-1a6c-4c70-bdeb-06ea67280f9b.png">
 
-## Challenge 1, Task 2: Review the free cluster home page and the Azure Data Explorer Web UI
 On your My Cluster page, you'll see the following:
 
 Your cluster's name, the option to upgrade to a full cluster, and the option to delete the cluster.
@@ -94,8 +93,7 @@ If you already have a free cluster and just want to create a new database for th
 
 
 
-
-
+## Challenge 1, Task 2: Write your Kusto query to create table and ingest data from the storage
 
 Before starting this task, 
 
@@ -110,13 +108,13 @@ Expected Learning Outcomes:
 
 Ingest data using one-click ingestion from Azure Blob Storage to your ADX cluster.
 
-## Challenge 1, Task 3.1: Create the raw table -logsRaw
+## Challenge 1, Task 2.1: Create the raw table -logsRaw
 
 Run the following command to create table:
 
 .create table logsRaw(Timestamp:datetime, Source:string, Node:string, Level:string, Component:string, ClientRequestId:string, Message:string, Properties:dynamic) 
 
-## Challenge 1, Task 3.2: Use the “One-click” UI (User Interface) to ingest data from Azure blob storage
+## Challenge 1, Task 2.2: Use the “One-click” UI (User Interface) to ingest data from Azure blob storage
 You need to analyze the logs for Contoso, which are stored in Azure blob storage.
 Go back to the My Cluster page, click the Ingest button
 <img width="506" alt="image" src="https://user-images.githubusercontent.com/78459999/220137856-248fb10f-7289-4c04-9e6d-47a43f7507b2.png">
@@ -139,8 +137,10 @@ Under Data format, make sure you select 'Keep current table schema' and deselect
 Wait for the ingestion to be completed, and click Close.
 
 Go to the Query page. Run the following KQL query to verify that data was ingested to the table. The logsRaw table should have 3834012 records
+
 logsRaw
   | count
+
 
 ## Challenge 2 : Basics of KQL and Advanced KQL( run on the customer EDR Subscription resource for ADX)
 
@@ -201,10 +201,9 @@ enriched_flow_agg_1_min
         | where flowRecord_dpiStringInfo_application != ''
         | project eventTimeWindowStart,eventTimeWindowEnd, flowRecord_keys_sessionId,flowRecord_dataStats_upLinkOctets, flowRecord_dataStats_downLinkOctets,  flowRecord_dpiStringInfo_application
       
-
 The 'take' operator samples any number of records from our table without any order. In the above example, we asked to provide 10 random records.
 
 enriched_flow_agg_1_min        
         | where flowRecord_dpiStringInfo_application != ''
         | project flowRecord_keys_sessionId,flowRecord_dataStats_upLinkOctets, flowRecord_dataStats_downLinkOctets, flowRecord_dpiStringInfo_application
-        |take 10
+        | take 10
