@@ -214,9 +214,17 @@ enriched_flow_agg_1_min
         | project flowRecord_keys_sessionId,flowRecord_dataStats_upLinkOctets, flowRecord_dataStats_downLinkOctets, flowRecord_dpiStringInfo_application
         | take 10
 
-## Challenge 2: Query 1.2 : User is interested to view the sum of total volume bytes or bites for maximum and minimum event time window start for all the flow records in enriched table on application level
+## Challenge 2: Query 1.2 : User is interested to view the sum of total volume bytes or bites for maximum and minimum event time window start for all the flow records in enriched table on application level 
 
-Summarize-https://learn.microsoft.com/en-us/azure/data-explorer/kusto/query/sum-aggfunction
+Summarize-The input rows are arranged into groups having the same values of the by expressions. Then the specified aggregation functions are computed over each group, producing a row for each group. The result contains the by columns and also at least one column for each computed aggregate. (Some aggregation functions return multiple columns.)
+
+The result has as many rows as there are distinct combinations of by values (which may be zero). If there are no group keys provided, the result has a single record.
+To summarize over ranges of numeric values, use bin() to reduce ranges to discrete values.
+https://learn.microsoft.com/en-us/azure/data-explorer/kusto/query/sum-aggfunction
+
+https://learn.microsoft.com/en-us/azure/data-explorer/kusto/query/topoperator
+
+
 Sum function-https://learn.microsoft.com/en-us/azure/data-explorer/kusto/query/sum-aggfunction
 Min function-https://learn.microsoft.com/en-us/azure/data-explorer/kusto/query/min-aggfunction
 Max function-https://learn.microsoft.com/en-us/azure/data-explorer/kusto/query/max-aggfunction
@@ -227,7 +235,7 @@ enriched_flow_agg_1_min
     total_volume_bits=(sum(flowRecord_dataStats_downLinkOctets) + sum(flowRecord_dataStats_upLinkOctets)) * 8 
 | project maxTapp,minTapp, total_volume_bits,total_volume_bytes
 
-## Challenge 2: Query 1.3 :  While exploring more on dataset, user is now interested to drill down above query and check what would be volume of bytes and bites for each application in every 5 mins
+## Challenge 2: Query 1.3 :  While exploring more on dataset, user is now interested to drill down above query and check what would be volume of bytes and bites for each application in every 5 mins 
 
 bin-The nearest multiple of roundTo below value. Null values, a null bin size, or a negative bin size will result in null.https://learn.microsoft.com/en-us/azure/data-explorer/kusto/query/binfunction
 extend-Create calculated columns and append them to the result set.https://learn.microsoft.com/en-us/azure/data-explorer/kusto/query/extendoperator
@@ -250,7 +258,12 @@ enriched_flow_agg_1_min
 View should have below columns:
 <img width="444" alt="image" src="https://user-images.githubusercontent.com/78459999/220405408-b6d28068-fda6-4d1b-ba82-3db323ca10c3.png">
 
-## Challenge 2: Query 1.4 : User wanted to gain insights on the number of records which got aggregrated in 5 min view of above queries while getting a view on total volume on application level.(there is already column name in enriched view of flow which had record count value on 1 min view)
+## Challenge 2: Query 1.4 : User wanted to gain insights on the number of records which got aggregrated in 5 min view of above queries while getting a view on total volume on application level and sort total volume in descending order while viewing data (there is already column name in enriched view of flow which had record count value on 1 min view) for top 5 applications according to the total volume in bytes.
+
+
+sort- Sorts the rows of the input table into order by one or more columns.https://learn.microsoft.com/en-us/azure/data-explorer/kusto/query/sort-operator
+sum-
+top-Returns the first N records sorted by the specified columns. https://learn.microsoft.com/en-us/azure/data-explorer/kusto/query/topoperator
 
 enriched_flow_agg_1_min 
 | summarize maxTapp= max(eventTimeWindowStart),
@@ -260,5 +273,9 @@ enriched_flow_agg_1_min
     by bin(eventTimeWindowStart, 5m), flowRecord_dpiStringInfo_application
 | extend minTapp = maxTapp - 5m 
 | where eventTimeWindowStart between (minTapp .. maxTapp)
+| sort by total_volume_bytes desc
+| top 5 by total_volume_bytes 
 | project minTapp,maxTapp,total_volume_bits, total_volume_bytes, flowRecord_dpiStringInfo_application, recordcount_in5min
+  
 
+## Challenge 2: Query 1.5 : 
