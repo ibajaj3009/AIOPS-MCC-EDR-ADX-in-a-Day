@@ -1,10 +1,100 @@
 # AIOPS MCC EDR Azure Data Explorer in a day
 
+Welcome to Hands on Workshop on MCC-EDR Azure Data Explorer workshop.These challenges are discover by doing experience.
+
+## After the workshop, you will better understand how to 
+
+1. Set up Free Azure DataExplorer cluster and database
+2. Ingest data into ADX Database
+3. Run powerful kql queries to explore data
+4. Visualize Data in ADX Dashboards
+
+## Lab 1: Cluster Creation, Data Ingestion and Exploration 
+This Lab will focus on enabling the participants to Create a free ADX cluster, and ingest data into the cluster - One click ingestion of historic data , write some KQL queries and maintain dashboard for visualization
+
+## What is Data Explorer and when is it a good fit?
+
+1. Data Explorer is a fully managed, high-performance, big data analytics platform that makes it easy to analyze high volumes of data in near real time. The Azure Data Explorer toolbox gives you an end-to-end solution for data ingestion, query, visualization, and management.
+2. By analyzing structured, semi-structured, and unstructured data across time series, and by using Machine Learning, Azure Data Explorer makes it simple to extract key insights, spot patterns and trends, and create forecasting models.
+3.  Azure Data Explorer is scalable, secure, robust, and enterprise-ready, and is useful for log analytics, time series analytics, IoT, and general-purpose exploratory analytics.
+
+ADX capabilities are extended by other services built on its powerful query language, including Azure Monitor logs, Application Insights, Time Series Insights, and Microsoft Defender for Endpoint.
+
+<img width="780" alt="image" src="https://user-images.githubusercontent.com/78459999/220305163-6f848629-0739-4514-b9b1-b44e824115b1.png">
+
+## Scenario
+
+Contoso is an telecommunication enterprise company that is looking to gain some valuable insights from MCC EDR dataset which are getting generated at on premise MCC server.They are looking for an option to stream the data on Azure Data Services and build the dashboard and reports. For that, they had deployed AIOps solution in their Azure environment for ingestion in delta lake format and streamed cleaned data in Azure Data Explorer Service with an enriched table having 1min aggregrated view of session and flow tables.
+
+<img width="793" alt="image" src="https://user-images.githubusercontent.com/78459999/220313676-819aea26-8c3d-43a9-9b11-417b1b983bbe.png">
+
+One of the Contoso's Business Analyst planning to explore data in ADX and check its ingestion features, explore streaming data in ADX for enriched flow table and looking for the below usecases to be build on dashboards:
+
+1. Total active users per day per application.
+2. Total volume computation at Application level.
+
+This workshop walks through the steps in designing, creating, and configuring Azure Data Explorer clusters keeping in mind these requirements.Once the cluster is deployed, this workshop enlists the steps to ingest data into ADX databases and tables using One Click ingestion for sample run.
+
+### Pre-requisites
+Either a Microsoft account (MSA) or an Azure Active Directory (AAD) identity. This will be used to create free cluster.
+
+
 ## Challenge 1, Task 3: Ingest data from Azure Storage Account
 
 Data ingestion to ADX is the process used to load data records from one or more sources into a table in your ADX cluster. Once ingested, the data becomes available for query.
 
 ADX supports several ingestion methods, including ingestion tools, connectors and plugins, Azure managed pipelines, programmatic ingestion using SDKs, and direct access to ingestion.
+
+## How to start with ADX
+Generally, when starting with Azure Data Explorer, you will follow the following steps (ADX Workshop Labs will cover all these steps):
+
+1. Create a free ADX cluster: To use Azure Data Explorer you first create a free cluster. An Azure Data Explorer cluster is the most basic unit.
+2. Create database: Each cluster has one or more databases in that cluster. Each Azure Data Explorer cluster can hold up to 10,000 databases and each database up to 10,000 tables.
+3. Ingest data: Load data into database tables so that you can run queries against it. Azure Data Explorer supports several ingestion methods.
+4. Query data: Azure Data Explorer uses the Kusto Query Language, which is an expressive, intuitive, and highly productive query language. It offers a smooth transition from simple one-liners to complex data processing scripts, and supports querying structured, semi-structured, and unstructured (text search) data. Use the web application to run, review, and share queries and results. You can also send queries programmatically (using an SDK) or to a REST API endpoint.
+5. Visualize results: Use different visual displays of your data in the native Azure Data Explorer Dashboards. You can also display your results using connectors to some of the leading visualization services, such as Power BI and Grafana.
+
+Ready to go? Click on the below links to start the challenges
+
+## Lab 1: Cluster Creation, Data Ingestion, Exploration and Visualization
+
+This Lab is organized into the following 4 Challenges:
+
+Challenge	Description	Est. Time
+Challenge 1	Create a free ADX cluster	and load Data from Azure Storage	25 Min
+Challenge 2	Starting with the basics of KQL	1 and Advance KQL Queries Data Exploration	1 hour
+Challenge 3 Visualization through queries and dashboards 1hour
+
+Each challenge has a set of tasks that need to be completed in order to move on to the next challenge
+
+## Challenge 1: Create an ADX cluster and load Data from Azure Storage(the sample data to explore ADX features with one click ingestion.AIOps handles ingestion)
+To use Azure Data Explorer (ADX), you first have to create a free ADX cluster, and create one or more databases in that cluster. Each database has tables. Then you can ingest data into a database so that you can run queries against it.
+
+In this Challenge, you will create a Free cluster and a database. You will run simple KQL query in Kusto Web Explorer (KWE UI).
+
+## Expected Learning Outcomes:
+
+Create and work with Free ADX cluster.
+
+### Challenge 1, Task 1: Create an ADX cluster and Database
+
+Create your free cluster and database here: https://aka.ms/kustofree.
+
+<img width="515" alt="image" src="https://user-images.githubusercontent.com/78459999/220317774-d3de5eba-1a6c-4c70-bdeb-06ea67280f9b.png">
+
+## Challenge 1, Task 2: Review the free cluster home page and the Azure Data Explorer Web UI
+On your My Cluster page, you'll see the following:
+
+Your cluster's name, the option to upgrade to a full cluster, and the option to delete the cluster.
+Cluster details like: cluster's location, and URI links for connecting to your cluster via APIs or other tools.
+Quick actions you can take to get started with your cluster.
+A list of databases in your cluster.
+If you already have a free cluster and just want to create a new database for this lab, use the Create button in the Create database tile.
+
+
+
+
+
 
 
 Before starting this task, 
