@@ -190,6 +190,12 @@ SQL to KQL cheat sheets - aka.ms/SQL2KQL
 
 1 min aggregrated view is present from session and flow tables.
 
+## Challenge 2: Query 1.0 : User is interested to view the schema of 1min aggregrated view of enriched flow table.
+
+enriched_flow_agg_1_min
+| getschema
+
+
 ## Challenge 2: Query 1.1 : User is interested to view the records in 1min agregrated enriched flow table where application is not empty and able to view only session id, uplinkOctets, downlink octets value with event time window start and end details
 
 KQL queries can be used to filter data and return specific information. Now, you'll learn how to choose specific rows of data.
@@ -207,3 +213,52 @@ enriched_flow_agg_1_min
         | where flowRecord_dpiStringInfo_application != ''
         | project flowRecord_keys_sessionId,flowRecord_dataStats_upLinkOctets, flowRecord_dataStats_downLinkOctets, flowRecord_dpiStringInfo_application
         | take 10
+
+## Challenge 2: Query 1.2 : User is interested to view the sum of total volume bytes or bites for maximum and minimum event time window start for all the flow records in enriched table on application level
+
+Summarize-https://learn.microsoft.com/en-us/azure/data-explorer/kusto/query/sum-aggfunction
+Sum function-https://learn.microsoft.com/en-us/azure/data-explorer/kusto/query/sum-aggfunction
+Min function-https://learn.microsoft.com/en-us/azure/data-explorer/kusto/query/min-aggfunction
+Max function-https://learn.microsoft.com/en-us/azure/data-explorer/kusto/query/max-aggfunction
+
+enriched_flow_agg_1_min 
+| summarize maxTapp= max(eventTimeWindowStart), minTapp= min(eventTimeWindowStart),
+    total_volume_bytes=(sum(flowRecord_dataStats_downLinkOctets) + sum(flowRecord_dataStats_upLinkOctets)),
+    total_volume_bits=(sum(flowRecord_dataStats_downLinkOctets) + sum(flowRecord_dataStats_upLinkOctets)) * 8 
+| project maxTapp,minTapp, total_volume_bits,total_volume_bytes
+
+## Challenge 2: Query 1.3 :  While exploring more on dataset, user is now interested to drill down above query and check what would be volume of bytes and bites for each application in every 5 mins
+
+bin-The nearest multiple of roundTo below value. Null values, a null bin size, or a negative bin size will result in null.https://learn.microsoft.com/en-us/azure/data-explorer/kusto/query/binfunction
+extend-Create calculated columns and append them to the result set.https://learn.microsoft.com/en-us/azure/data-explorer/kusto/query/extendoperator
+project- https://learn.microsoft.com/en-us/azure/data-explorer/kusto/query/projectoperator
+
+Expression	Result
+bin(4.5,1)	4.0
+bin(time(16d),7d)	14d
+bin(datetime(1970-05-11 13:45:07),1d)	datetime(1970-05-11)
+
+enriched_flow_agg_1_min 
+| summarize maxTapp= max(eventTimeWindowStart),
+    total_volume_bytes=(sum(flowRecord_dataStats_downLinkOctets) + sum(flowRecord_dataStats_upLinkOctets)),
+    total_volume_bits=(sum(flowRecord_dataStats_downLinkOctets) + sum(flowRecord_dataStats_upLinkOctets)) * 8 
+    by bin(eventTimeWindowStart, 5m), flowRecord_dpiStringInfo_application
+| extend minTapp = maxTapp - 5m 
+| where eventTimeWindowStart between (minTapp .. maxTapp)
+| project minTapp,maxTapp,total_volume_bits, total_volume_bytes, flowRecord_dpiStringInfo_application
+  
+View should have below columns:
+<img width="444" alt="image" src="https://user-images.githubusercontent.com/78459999/220405408-b6d28068-fda6-4d1b-ba82-3db323ca10c3.png">
+
+## Challenge 2: Query 1.4 : User wanted to gain insights on the number of records which got aggregrated in 5 min view of above queries while getting a view on total volume on application level.(there is already column name in enriched view of flow which had record count value on 1 min view)
+
+enriched_flow_agg_1_min 
+| summarize maxTapp= max(eventTimeWindowStart),
+    total_volume_bytes=(sum(flowRecord_dataStats_downLinkOctets) + sum(flowRecord_dataStats_upLinkOctets)),
+    total_volume_bits=(sum(flowRecord_dataStats_downLinkOctets) + sum(flowRecord_dataStats_upLinkOctets)) * 8 ,
+    recordcount_in5min= sum(recordCount)
+    by bin(eventTimeWindowStart, 5m), flowRecord_dpiStringInfo_application
+| extend minTapp = maxTapp - 5m 
+| where eventTimeWindowStart between (minTapp .. maxTapp)
+| project minTapp,maxTapp,total_volume_bits, total_volume_bytes, flowRecord_dpiStringInfo_application, recordcount_in5min
+
