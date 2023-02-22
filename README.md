@@ -231,9 +231,11 @@ Max function-https://learn.microsoft.com/en-us/azure/data-explorer/kusto/query/m
 
 enriched_flow_agg_1_min 
 | summarize maxTapp= max(eventTimeWindowStart), minTapp= min(eventTimeWindowStart),
-    total_volume_bytes=(sum(flowRecord_dataStats_downLinkOctets) + sum(flowRecord_dataStats_upLinkOctets)),
-    total_volume_bits=(sum(flowRecord_dataStats_downLinkOctets) + sum(flowRecord_dataStats_upLinkOctets)) * 8 
+  total_volume_bytes=(sum(flowRecord_dataStats_downLinkOctets) + sum(flowRecord_dataStats_upLinkOctets)),
+  total_volume_bits=(sum(flowRecord_dataStats_downLinkOctets) + sum(flowRecord_dataStats_upLinkOctets)) * 8 
 | project maxTapp,minTapp, total_volume_bits,total_volume_bytes
+
+
 
 ## Challenge 2: Query 1.3 :  While exploring more on dataset, user is now interested to drill down above query and check what would be volume of bytes and bites for each application in every 5 mins 
 
@@ -262,15 +264,14 @@ View should have below columns:
 
 
 sort- Sorts the rows of the input table into order by one or more columns.https://learn.microsoft.com/en-us/azure/data-explorer/kusto/query/sort-operator
-sum-
-top-Returns the first N records sorted by the specified columns. https://learn.microsoft.com/en-us/azure/data-explorer/kusto/query/topoperator
+sum- top-Returns the first N records sorted by the specified columns. https://learn.microsoft.com/en-us/azure/data-explorer/kusto/query/topoperator
 
 enriched_flow_agg_1_min 
 | summarize maxTapp= max(eventTimeWindowStart),
-    total_volume_bytes=(sum(flowRecord_dataStats_downLinkOctets) + sum(flowRecord_dataStats_upLinkOctets)),
-    total_volume_bits=(sum(flowRecord_dataStats_downLinkOctets) + sum(flowRecord_dataStats_upLinkOctets)) * 8 ,
-    recordcount_in5min= sum(recordCount)
-    by bin(eventTimeWindowStart, 5m), flowRecord_dpiStringInfo_application
+  total_volume_bytes=(sum(flowRecord_dataStats_downLinkOctets) + sum(flowRecord_dataStats_upLinkOctets)),
+  total_volume_bits=(sum(flowRecord_dataStats_downLinkOctets) + sum(flowRecord_dataStats_upLinkOctets)) * 8 ,
+  recordcount_in5min= sum(recordCount)
+  by bin(eventTimeWindowStart, 5m), flowRecord_dpiStringInfo_application
 | extend minTapp = maxTapp - 5m 
 | where eventTimeWindowStart between (minTapp .. maxTapp)
 | sort by total_volume_bytes desc
@@ -278,4 +279,22 @@ enriched_flow_agg_1_min
 | project minTapp,maxTapp,total_volume_bits, total_volume_bytes, flowRecord_dpiStringInfo_application, recordcount_in5min
   
 
-## Challenge 2: Query 1.5 : 
+## Challenge 2: Query 1.5 : One of an other user wanted to view the active distinct users count in a day for last 7 days at application level.
+
+count_distinct-Counts unique values specified by the scalar expression per summary group, or the total number of unique values if the summary group is omitted.
+https://learn.microsoft.com/en-us/azure/data-explorer/kusto/query/count-distinct-aggfunction
+startofday-Returns the start of the day containing the date, shifted by an offset, if provided.
+format_datetime-Formats a datetime according to the provided format.https://learn.microsoft.com/en-us/azure/data-explorer/kusto/query/format-datetimefunction
+order by-
+project-
+
+enriched_flow_agg_1_min 
+| summarize maxTapp= max(eventTimeWindowStart), distinct_flowRecord_subscriberInfo_imsi= dcount(flowRecord_subscriberInfo_imsi) by startofday(eventTimeWindowStart),flowRecord_dpiStringInfo_application
+| extend minTapp=maxTapp-7d
+| where eventTimeWindowStart between (minTapp .. maxTapp)
+| order by eventTimeWindowStart
+| project
+    format_datetime(eventTimeWindowStart, "yyyy-MM-dd"),
+    distinct_flowRecord_subscriberInfo_imsi,
+    flowRecord_dpiStringInfo_application;
+
