@@ -9,8 +9,10 @@ Welcome to Hands on Workshop on MCC-EDR Azure Data Explorer workshop.These chall
 3. Run powerful kql queries to explore data
 4. Visualize Data in ADX Dashboards
 
+
 ## Lab 1: Cluster Creation, Data Ingestion and Exploration 
 This Lab will focus on enabling the participants to Create a free ADX cluster, and ingest data into the cluster - One click ingestion of historic data , write some KQL queries and maintain dashboard for visualization
+
 
 ## What is Data Explorer and when is it a good fit?
 
@@ -21,6 +23,7 @@ This Lab will focus on enabling the participants to Create a free ADX cluster, a
 ADX capabilities are extended by other services built on its powerful query language, including Azure Monitor logs, Application Insights, Time Series Insights, and Microsoft Defender for Endpoint.
 
 <img width="780" alt="image" src="https://user-images.githubusercontent.com/78459999/220305163-6f848629-0739-4514-b9b1-b44e824115b1.png">
+
 
 ## Scenario
 
@@ -35,6 +38,7 @@ One of the Contoso's Business Analyst planning to explore data in ADX and check 
 
 This workshop walks through the steps in designing, creating, and configuring Azure Data Explorer clusters keeping in mind these requirements.Once the cluster is deployed, this workshop enlists the steps to ingest data into ADX databases and tables using One Click ingestion for sample run.
 
+
 ### Pre-requisites
 Either a Microsoft account (MSA) or an Azure Active Directory (AAD) identity. This will be used to create free cluster.
 
@@ -44,6 +48,7 @@ Either a Microsoft account (MSA) or an Azure Active Directory (AAD) identity. Th
 Data ingestion to ADX is the process used to load data records from one or more sources into a table in your ADX cluster. Once ingested, the data becomes available for query.
 
 ADX supports several ingestion methods, including ingestion tools, connectors and plugins, Azure managed pipelines, programmatic ingestion using SDKs, and direct access to ingestion.
+
 
 ## How to start with ADX
 Generally, when starting with Azure Data Explorer, you will follow the following steps (ADX Workshop Labs will cover all these steps):
@@ -176,24 +181,32 @@ The primary language to interact with Kusto is KQL (Kusto Query Language). To ma
 
 explain select top 10 * from enriched_flow_agg_1_min 
 
+
 Output of the above query will be a corresponsing KQL query
 "Query": 
 enriched_flow_agg_1_min
 | project eventTimeWindowStart, eventTimeWindowEnd, flowRecord_keys_sessionId, flowRecord_subscriberInfo_imsi, sessionRecord_subscriberInfo_msisdn, sessionRecord_servingNetworkInfo_apnId, sessionRecord_servingNetworkInfo_nodeAddress, flowRecord_dpiStringInfo_application, recordCount, flowRecord_networkStatsInfo_downlinkFlowPeakThroughput, flowRecord_networkStatsInfo_downlinkFlowPeakThroughput_max, flowRecord_dataStats_downLinkOctets, flowRecord_networkStatsInfo_downlinkFlowActivityDuration, flowRecord_downlinkFlowCalculatedThroughput, flowRecord_networkStatsInfo_uplinkFlowPeakThroughput, flowRecord_networkStatsInfo_uplinkFlowPeakThroughput_max, flowRecord_dataStats_upLinkOctets, flowRecord_networkStatsInfo_uplinkFlowActivityDuration, flowRecord_uplinkFlowCalculatedThroughput, flowRecord_dataStats_downLinkDropOctets, flowRecord_dataStats_upLinkDropOctets, flowRecord_dataStats_downLinkPackets, flowRecord_dataStats_downLinkDropPackets, flowRecord_dataStats_downLinkTotalPackets, flowRecord_downLinkCalculatedPacketLoss_pct_max, flowRecord_dataStats_upLinkPackets, flowRecord_dataStats_upLinkDropPackets, flowRecord_dataStats_upLinkTotalPackets, flowRecord_upLinkCalculatedPacketLoss_pct_max, flowRecord_tcpRetransInfo_downlinkRetransBytes, flowRecord_downlinkCalculatedRetrans_pct_max, flowRecord_tcpRetransInfo_uplinkRetransBytes, flowRecord_uplinkCalculatedRetrans_pct_max, flowRecord_flowEdrRttInfo_downlinkMinRTT, flowRecord_flowEdrRttInfo_uplinkMinRTT, flowRecord_flowEdrRttInfo_downlinkMaxRTT, flowRecord_flowEdrRttInfo_uplinkMaxRTT, flowRecord_flowEdrRttInfo_downlinkAvgRTT_percentile_95, flowRecord_flowEdrRttInfo_uplinkAvgRTT_percentile_95, flowRecord_networkPerfInfo_initialRTTCalculatedTimeSecs, flowRecord_networkPerfInfo_downlinkInitialRTTCalculatedTimeSecs, flowRecord_networkPerfInfo_uplinkInitialRTTCalculatedTimeSecs, flowRecord_networkPerfInfo_initialRTTCalculatedTimeSecsRecordCount, flowRecord_networkPerfInfo_downlinkInitialRTTCalculatedTimeSecsRecordCount, flowRecord_networkPerfInfo_uplinkInitialRTTCalculatedTimeSecsRecordCount, delta_start_time, adx_start_time
 | take int(10)
 
+
+
 ### References:
 
 SQL to KQL cheat sheets - aka.ms/SQL2KQL
+
+
 
 ## Challenge 2: Task 1 : Basic KQL queries-explore the data
 
 1 min aggregrated view is present from session and flow tables.
 
+
+
 ## Challenge 2: Query 1.0 : User is interested to view the schema of 1min aggregrated view of enriched flow table.
 
 enriched_flow_agg_1_min
 | getschema
+
 
 
 ## Challenge 2: Query 1.1 : User is interested to view the records in 1min agregrated enriched flow table where application is not empty and able to view only session id, uplinkOctets, downlink octets value with event time window start and end details
@@ -213,6 +226,8 @@ enriched_flow_agg_1_min
         | where flowRecord_dpiStringInfo_application != ''
         | project flowRecord_keys_sessionId,flowRecord_dataStats_upLinkOctets, flowRecord_dataStats_downLinkOctets, flowRecord_dpiStringInfo_application
         | take 10
+
+
 
 ## Challenge 2: Query 1.2 : User is interested to view the sum of total volume bytes or bites for maximum and minimum event time window start for all the flow records in enriched table on application level 
 
@@ -260,6 +275,9 @@ enriched_flow_agg_1_min
 View should have below columns:
 <img width="444" alt="image" src="https://user-images.githubusercontent.com/78459999/220405408-b6d28068-fda6-4d1b-ba82-3db323ca10c3.png">
 
+
+
+
 ## Challenge 2: Query 1.4 : User wanted to gain insights on the number of records which got aggregrated in 5 min view of above queries while getting a view on total volume on application level and sort total volume in descending order while viewing data (there is already column name in enriched view of flow which had record count value on 1 min view) for top 5 applications according to the total volume in bytes.
 
 
@@ -288,6 +306,7 @@ format_datetime-Formats a datetime according to the provided format.https://lear
 order by-
 project-
 
+
 enriched_flow_agg_1_min 
 | summarize maxTapp= max(eventTimeWindowStart), distinct_flowRecord_subscriberInfo_imsi= dcount(flowRecord_subscriberInfo_imsi) by startofday(eventTimeWindowStart),flowRecord_dpiStringInfo_application
 | extend minTapp=maxTapp-7d
@@ -298,3 +317,46 @@ enriched_flow_agg_1_min
     distinct_flowRecord_subscriberInfo_imsi,
     flowRecord_dpiStringInfo_application;
 
+
+
+## Challenge 2: Query 1.6: Try to write the above query by using variables with 'let' to optimize the main query
+
+Declaring variables and using 'let' statements 
+
+You can use the 'let' statement to set a variable name equal to an expression or a function, or to create views (virtual, temporary, tables based on the result-set of another KQL query).
+
+let statements are useful for:
+
+Breaking up a complex expression into multiple parts, each represented by a variable.
+Defining constants outside of the query body for readability.
+Defining a variable once and using it multiple times within a query.
+For example, you can use 2 'let' statements to create "LogType" and "TimeBucket" variables with the following values:
+
+let lookbackduration=7d; // Specify lookback duration
+let maxTapp =  toscalar(enriched_flow_agg_1_min | summarize max(eventTimeWindowStart)); 
+let minTapp = maxTapp - lookbackduration;
+
+And then craft a query that performs a count of "Warning" by 1 minute Timestamp buckets (bins).
+
+
+Remember to include a ";" at the end of your let statement.
+
+
+toscalar-Returns a scalar constant value of the evaluated expression.This function is useful for queries that require staged calculations. For example, calculate a total count of events, and then use the result to filter groups that exceed a certain percent of all events.
+
+
+
+let lookbackduration=7d; // Specify lookback duration
+let maxTapp =  toscalar(enriched_flow_agg_1_min | summarize max(eventTimeWindowStart));
+let minTapp = maxTapp - lookbackduration;
+enriched_flow_agg_1_min
+| where eventTimeWindowStart between (minTapp .. maxTapp)
+| summarize distinct_flowRecord_subscriberInfo_imsi=count_distinct(flowRecord_subscriberInfo_imsi) by startofday(eventTimeWindowStart), flowRecord_dpiStringInfo_application
+| order by eventTimeWindowStart
+| project
+    format_datetime(eventTimeWindowStart, "yyyy-MM-dd"),
+    distinct_flowRecord_subscriberInfo_imsi,
+    flowRecord_dpiStringInfo_application;
+    
+    
+    
