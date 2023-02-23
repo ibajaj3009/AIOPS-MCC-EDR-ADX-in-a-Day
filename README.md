@@ -336,14 +336,10 @@ let lookbackduration=7d; // Specify lookback duration
 let maxTapp =  toscalar(enriched_flow_agg_1_min | summarize max(eventTimeWindowStart)); 
 let minTapp = maxTapp - lookbackduration;
 
-And then craft a query that performs a count of "Warning" by 1 minute Timestamp buckets (bins).
-
-
 Remember to include a ";" at the end of your let statement.
 
 
 toscalar-Returns a scalar constant value of the evaluated expression.This function is useful for queries that require staged calculations. For example, calculate a total count of events, and then use the result to filter groups that exceed a certain percent of all events.
-
 
 
 let lookbackduration=7d; // Specify lookback duration
@@ -357,6 +353,29 @@ enriched_flow_agg_1_min
     format_datetime(eventTimeWindowStart, "yyyy-MM-dd"),
     distinct_flowRecord_subscriberInfo_imsi,
     flowRecord_dpiStringInfo_application;
-    
-    
+ 
+ 
+ 
+ ## Challenge 2: Query 1.7:  Visualize the above query with render operator for top 10 applications and for empty application column, it should be marked as "UNDETECTED".
+ 
+RENDER OPERATOR: Instructs the user agent to render a visualization of the query results.
+The render operator must be the last operator in the query, and can only be used with queries that produce a single tabular data stream result. 
+The render operator does not modify data. It injects an annotation ("Visualization") into the result's extended properties. 
+https://learn.microsoft.com/en-us/azure/data-explorer/kusto/query/tutorial?pivots=azuredataexplorer#displaychartortable
+
+
+let lookbackduration=7d; // Specify lookback duration
+let maxTapp =  toscalar(enriched_flow_agg_1_min | summarize max(eventTimeWindowStart));
+let minTapp = maxTapp - lookbackduration;
+enriched_flow_agg_1_min
+| where eventTimeWindowStart between (minTapp .. maxTapp)
+| summarize distinct_flowRecord_subscriberInfo_imsi=count_distinct(flowRecord_subscriberInfo_imsi) by startofday(eventTimeWindowStart), 
+  flowRecord_dpiStringInfo_application=case(isempty(flowRecord_dpiStringInfo_application),"UNDETECTED", flowRecord_dpiStringInfo_application)
+| order by distinct_flowRecord_subscriberInfo_imsi desc//eventTimeWindowStart
+| top 10 by distinct_flowRecord_subscriberInfo_imsi
+| render piechart
+  
+  
+ 
+ ## Challenge 2: Query 1.8:  
     
