@@ -2,20 +2,12 @@
 
 Welcome to Hands on Workshop on MCC-EDR Azure Data Explorer workshop.These challenges are discover by doing experience.
 
-## After the workshop, you will better understand how to 
-
-1. Set up Free Azure DataExplorer cluster and database
-2. Ingest data into ADX Database
-3. Run powerful kql queries to explore data
-4. Visualize Data in ADX Dashboards
-
 
 ## Lab 1: Cluster Creation, Data Ingestion and Exploration 
 This Lab will focus on enabling the participants to Create a free ADX cluster, and ingest data into the cluster - One click ingestion of historic data , write some KQL queries and maintain dashboard for visualization
 
 
 ## What is Data Explorer and when is it a good fit?
-
 1. Data Explorer is a fully managed, high-performance, big data analytics platform that makes it easy to analyze high volumes of data in near real time. The Azure Data Explorer toolbox gives you an end-to-end solution for data ingestion, query, visualization, and management.
 2. By analyzing structured, semi-structured, and unstructured data across time series, and by using Machine Learning, Azure Data Explorer makes it simple to extract key insights, spot patterns and trends, and create forecasting models.
 3.  Azure Data Explorer is scalable, secure, robust, and enterprise-ready, and is useful for log analytics, time series analytics, IoT, and general-purpose exploratory analytics.
@@ -31,6 +23,8 @@ Contoso is an telecommunication enterprise company that is looking to gain some 
 
 <img width="793" alt="image" src="https://user-images.githubusercontent.com/78459999/220313676-819aea26-8c3d-43a9-9b11-417b1b983bbe.png">
 
+
+
 One of the Contoso's Business Analyst planning to explore data in ADX and check its ingestion features, explore streaming data in ADX for enriched flow table and looking for the below usecases to be build on dashboards:
 
 1. Total active users per day per application.
@@ -43,13 +37,6 @@ This workshop walks through the steps in designing, creating, and configuring Az
 Either a Microsoft account (MSA) or an Azure Active Directory (AAD) identity. This will be used to create free cluster.
 
 
-## Challenge 1, Task 3: Ingest data from Azure Storage Account
-
-Data ingestion to ADX is the process used to load data records from one or more sources into a table in your ADX cluster. Once ingested, the data becomes available for query.
-
-ADX supports several ingestion methods, including ingestion tools, connectors and plugins, Azure managed pipelines, programmatic ingestion using SDKs, and direct access to ingestion.
-
-
 ## How to start with ADX
 Generally, when starting with Azure Data Explorer, you will follow the following steps (ADX Workshop Labs will cover all these steps):
 
@@ -59,9 +46,11 @@ Generally, when starting with Azure Data Explorer, you will follow the following
 4. Query data: Azure Data Explorer uses the Kusto Query Language, which is an expressive, intuitive, and highly productive query language. It offers a smooth transition from simple one-liners to complex data processing scripts, and supports querying structured, semi-structured, and unstructured (text search) data. Use the web application to run, review, and share queries and results. You can also send queries programmatically (using an SDK) or to a REST API endpoint.
 5. Visualize results: Use different visual displays of your data in the native Azure Data Explorer Dashboards. You can also display your results using connectors to some of the leading visualization services, such as Power BI and Grafana.
 
+
 Ready to go? Click on the below links to start the challenges
 
-## Lab 1: Cluster Creation, Data Ingestion, Exploration and Visualization
+
+# Lab 1: Cluster Creation, Data Ingestion, Exploration and Visualization
 
 This Lab is organized into the following 4 Challenges:
 
@@ -81,6 +70,7 @@ In this Challenge, you will create a Free cluster and a database. You will run s
 
 Create and work with Free ADX cluster.
 
+
 ### Challenge 1, Task 1: Create an ADX cluster and Database and review the free cluster home page and the Azure Data Explorer Web UI
 
 Create your free cluster and database here: https://aka.ms/kustofree.
@@ -94,7 +84,6 @@ Cluster details like: cluster's location, and URI links for connecting to your c
 Quick actions you can take to get started with your cluster.
 A list of databases in your cluster.
 If you already have a free cluster and just want to create a new database for this lab, use the Create button in the Create database tile.
-
 
 
 
@@ -113,25 +102,29 @@ Expected Learning Outcomes:
 
 Ingest data using one-click ingestion from Azure Blob Storage to your ADX cluster.
 
+
 ## Challenge 1, Task 2.1: Create the raw table -logsRaw
 
 Run the following command to create table:
 
 .create table logsRaw(Timestamp:datetime, Source:string, Node:string, Level:string, Component:string, ClientRequestId:string, Message:string, Properties:dynamic) 
 
+
 ## Challenge 1, Task 2.2: Use the “One-click” UI (User Interface) to ingest data from Azure blob storage
-You need to analyze the logs for Contoso, which are stored in Azure blob storage.
+You need to analyze the logs for Contoso, which are stored in Azure blob storage.(dummy log files, EDR data is already uploaded in the real environment)
 Go back to the My Cluster page, click the Ingest button
+
 <img width="506" alt="image" src="https://user-images.githubusercontent.com/78459999/220137856-248fb10f-7289-4c04-9e6d-47a43f7507b2.png">
 
 Make sure the cluster and the Database fields are correct. Select Existing table or create new table.
+
 <img width="284" alt="image" src="https://user-images.githubusercontent.com/78459999/220138467-faa62871-ff9a-480c-9772-c0938b54b3d7.png">
 
-Ingest from Storage:
-Select "Blob container" as the Source type in the Source tab.
+Ingest from Storage: Select "Blob container" as the Source type in the Source tab.
 In the Link to source, paste the following SAS (Shared Access Signature) URL of the blob storage. SAS URL is a way to provide limited, time-bound access to Azure storage resources such as Blobs.
 
 https://logsbenchmark00.blob.core.windows.net/logsbenchmark-onegb/2014/?sp=rl&st=2022-08-18T00:00:00Z&se=2030-
+
 
 Select one of the Schema defining file (one is autoselected unless you want to change that) and click Next
 <img width="415" alt="image" src="https://user-images.githubusercontent.com/78459999/220139142-43690310-b232-4e98-9fee-ccf8ea6641d9.png">
@@ -377,5 +370,56 @@ enriched_flow_agg_1_min
   
   
  
- ## Challenge 2: Query 1.8:  
-    
+ ## Challenge 2: Query 1.8:  User wanted to view flow records timechart for every 10 sec to get total volume in bytes where application is not empty ''.
+ Looking for slicing an enriched table (containing session and flow records joined aggregrated view in 1 min) for total_volume_bytes in 1sec.
+
+bin- https://docs.microsoft.com/en-us/azure/data-explorer/kusto/query/binfunction
+summarize-
+render-
+
+//slice enriched table (containing session and flow records joined aggregrated view in 1 min) for total_volume_bytes in 1sec
+all_flow_events| 
+summarize total_volume_bytes=(sum (toint(flowRecord_dataStats_downLinkOctets)) + sum(toint(flowRecord_dataStats_upLinkOctets))) by bin(eventTime,10s)
+,flowRecord_dpiStringInfo_application=case(isempty(flowRecord_dpiStringInfo_application),"UNDETECTED", flowRecord_dpiStringInfo_application)|
+top 10 by total_volume_bytes
+|render timechart
+
+Such kind of view
+<img width="559" alt="image" src="https://user-images.githubusercontent.com/78459999/221203529-267e4750-30cd-4cbc-8050-c53a70263c00.png">
+
+<img width="597" alt="image" src="https://user-images.githubusercontent.com/78459999/221234303-357aea00-05a2-41af-b225-4b827108c6ce.png">
+
+
+#Challenge 3: Visualize with ADX dashboards
+
+##Challenge 3, Task 1: Prepare interactive dashboards with ADX Dashboard 
+
+Azure Data Explorer is a fast and highly scalable data exploration service for log and telemetry data. Explore your data from end-to-end in the Azure Data Explorer web application, starting with data ingestion, running queries, and ultimately building dashboards.
+
+pin a query from the query tab of the web UI.
+
+<img width="668" alt="image" src="https://user-images.githubusercontent.com/78459999/221235181-cf7c61ee-b7ae-44f8-8436-db440ebb51d6.png">
+
+
+To pin a query:
+
+Create and run the query whose output you want to visualize in the dashboard.
+
+Select Share > Pin to dashboard.
+
+In the Pin to dashboard pane:
+
+Provide a Tile name.
+The Data source name is auto populated from the query data source.
+Select Use existing data source if possible.
+Select Create new.
+Enter Dashboard name.
+Select the View dashboard after creation checkbox (if it's a new dashboard).
+Select Pin
+Screenshot of the Pin to dashboard pane.
+ 
+    <img width="124" alt="image" src="https://user-images.githubusercontent.com/78459999/221227556-010f4725-616b-46a5-b941-1260d0332f32.png">
+Reference:
+
+https://docs.microsoft.com/en-us/azure/data-explorer/azure-data-explorer-dashboards
+
