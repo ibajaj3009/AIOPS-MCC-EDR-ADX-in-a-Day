@@ -417,8 +417,9 @@ Enter Dashboard name.
 Select the View dashboard after creation checkbox (if it's a new dashboard).
 Select Pin
 Screenshot of the Pin to dashboard pane.
- 
-    <img width="124" alt="image" src="https://user-images.githubusercontent.com/78459999/221227556-010f4725-616b-46a5-b941-1260d0332f32.png">
+
+ <img width="634" alt="image" src="https://user-images.githubusercontent.com/78459999/221242388-e5ebcc60-652d-4210-9398-f40b0e4818e9.png">
+
 Reference:
 
 https://docs.microsoft.com/en-us/azure/data-explorer/azure-data-explorer-dashboards
