@@ -14,21 +14,24 @@ This Lab will focus on enabling the participants to Create a free ADX cluster, a
 
 ADX capabilities are extended by other services built on its powerful query language, including Azure Monitor logs, Application Insights, Time Series Insights, and Microsoft Defender for Endpoint.
 
+
 <img width="780" alt="image" src="https://user-images.githubusercontent.com/78459999/220305163-6f848629-0739-4514-b9b1-b44e824115b1.png">
 
 
 ## Scenario
 
-Contoso is an telecommunication enterprise company that is looking to gain some valuable insights from MCC EDR dataset which are getting generated at on premise MCC server.They are looking for an option to stream the data on Azure Data Services and build the dashboard and reports. For that, they had deployed AIOps solution in their Azure environment for ingestion in delta lake format and streamed cleaned data in Azure Data Explorer Service with an enriched table having 1min aggregrated view of session and flow tables.
+
+Contoso is an telecommunication enterprise company that is looking to gain some valuable insights from MCC EDR dataset which are getting generated at on premise MCC MSF server.They are looking for an option to stream the data on Azure Data Services and build the dashboard and reports. For that, they had deployed AIOps solution in their Azure environment for ingestion in delta lake format and streamed cleaned data in Azure Data Explorer Service with an enriched table having 1min aggregrated view of session and flow tables.
+
 
 <img width="793" alt="image" src="https://user-images.githubusercontent.com/78459999/220313676-819aea26-8c3d-43a9-9b11-417b1b983bbe.png">
 
 
 
 One of the Contoso's Business Analyst planning to explore data in ADX and check its ingestion features, explore streaming data in ADX for enriched flow table and looking for the below usecases to be build on dashboards:
-
-1. Total active users per day per application.
-2. Total volume computation at Application level.
+ 
+1. Total volume computation at Application level.
+2. Total active users per day for top 10 application.
 
 This workshop walks through the steps in designing, creating, and configuring Azure Data Explorer clusters keeping in mind these requirements.Once the cluster is deployed, this workshop enlists the steps to ingest data into ADX databases and tables using One Click ingestion for sample run.
 
@@ -48,7 +51,7 @@ Generally, when starting with Azure Data Explorer, you will follow the following
 
 
 Ready to go? Click on the below links to start the challenges
-
+[Lab 1: Cluster Creation, Data Ingestion, Exploration and Visualization]()
 
 # Lab 1: Cluster Creation, Data Ingestion, Exploration and Visualization
 
