@@ -216,7 +216,7 @@ enriched_flow_agg_1_min
 KQL queries can be used to filter data and return specific information. Now, you'll learn how to choose specific rows of data.
 The where operator filters results that satisfy a certain condition- 
 
-To get desired columns project operator is used: project operator - https://learn.microsoft.com/en-us/azure/data-explorer/kusto/query/projectoperator
+To get desired columns project operator is used: [project operator](https://learn.microsoft.com/en-us/azure/data-explorer/kusto/query/projectoperator)
        
 enriched_flow_agg_1_min        
         | where flowRecord_dpiStringInfo_application != ''
@@ -237,12 +237,13 @@ Summarize-The input rows are arranged into groups having the same values of the 
 
 The result has as many rows as there are distinct combinations of by values (which may be zero). If there are no group keys provided, the result has a single record.
 To summarize over ranges of numeric values, use bin() to reduce ranges to discrete values.
-https://learn.microsoft.com/en-us/azure/data-explorer/kusto/query/sum-aggfunction
+[bin](https://learn.microsoft.com/en-us/azure/data-explorer/kusto/query/sum-aggfunction)
 
 [top](https://learn.microsoft.com/en-us/azure/data-explorer/kusto/query/topoperator)
 [Sum function](https://learn.microsoft.com/en-us/azure/data-explorer/kusto/query/sum-aggfunction)
 [Min function](https://learn.microsoft.com/en-us/azure/data-explorer/kusto/query/min-aggfunction)
 [Max function](https://learn.microsoft.com/en-us/azure/data-explorer/kusto/query/max-aggfunction)
+
 
 enriched_flow_agg_1_min 
 | summarize maxTapp= max(eventTimeWindowStart), minTapp= min(eventTimeWindowStart),
@@ -302,12 +303,11 @@ enriched_flow_agg_1_min
 
 ### Challenge 2: Query 1.5 : One of an other user wanted to view the active distinct users count in a day for last 7 days at application level.
 
-count_distinct-Counts unique values specified by the scalar expression per summary group, or the total number of unique values if the summary group is omitted.
-https://learn.microsoft.com/en-us/azure/data-explorer/kusto/query/count-distinct-aggfunction
+[count_distinct](https://learn.microsoft.com/en-us/azure/data-explorer/kusto/query/count-distinct-aggfunction)-Counts unique values specified by the scalar expression per summary group, or the total number of unique values if the summary group is omitted.
 
 startofday-Returns the start of the day containing the date, shifted by an offset, if provided.
 
-format_datetime-Formats a datetime according to the provided format.https://learn.microsoft.com/en-us/azure/data-explorer/kusto/query/format-datetimefunction
+[format_datetime](https://learn.microsoft.com/en-us/azure/data-explorer/kusto/query/format-datetimefunction)-Formats a datetime according to the provided format.
 
 order by-
 
@@ -427,13 +427,14 @@ Select Share > Pin to dashboard.
 
 In the Pin to dashboard pane:
 
-Provide a Tile name.
-The Data source name is auto populated from the query data source.
-Select Use existing data source if possible.
-Select Create new.
-Enter Dashboard name.
-Select the View dashboard after creation checkbox (if it's a new dashboard).
-Select Pin
+1. Provide a Tile name.
+2. The Data source name is auto populated from the query data source.
+3. Select Use existing data source if possible.
+4. Select Create new.
+5. Enter Dashboard name.
+6. Select the View dashboard after creation checkbox (if it's a new dashboard).
+7. Select Pin
+
 Screenshot of the Pin to dashboard pane.
 
  <img width="634" alt="image" src="https://user-images.githubusercontent.com/78459999/221242388-e5ebcc60-652d-4210-9398-f40b0e4818e9.png">
