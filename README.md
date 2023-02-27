@@ -5,6 +5,12 @@ Welcome to Hands on Workshop on MCC-EDR Azure Data Explorer workshop.These chall
 
 ## Lab 1: Cluster Creation, Data Ingestion and Exploration 
 This Lab will focus on enabling the participants to Create a free ADX cluster, and ingest data into the cluster - One click ingestion of historic data , write some KQL queries and maintain dashboard for visualization
+Challenge Description Est. Time 
+Challenge 1 Create a free ADX cluster and load Data from Azure Storage 25 Min 
+Challenge 2 Starting with the basics of KQL 1 and Advance KQL Queries Data Exploration 1 hour 
+Challenge 3 Visualization through queries and dashboards 1hour
+
+Each challenge has a set of tasks that need to be completed in order to move on to the next challenge
 
 
 ## What is Data Explorer and when is it a good fit?
@@ -51,15 +57,18 @@ Generally, when starting with Azure Data Explorer, you will follow the following
 
 
 Ready to go? Click on the below links to start the challenges
-[Lab 1: Cluster Creation, Data Ingestion, Exploration and Visualization]()
+
 
 # Lab 1: Cluster Creation, Data Ingestion, Exploration and Visualization
 
 This Lab is organized into the following 4 Challenges:
 
 Challenge	Description	Est. Time
+
 Challenge 1	Create a free ADX cluster	and load Data from Azure Storage	25 Min
+
 Challenge 2	Starting with the basics of KQL	1 and Advance KQL Queries Data Exploration	1 hour
+
 Challenge 3 Visualization through queries and dashboards 1hour
 
 Each challenge has a set of tasks that need to be completed in order to move on to the next challenge
@@ -86,11 +95,12 @@ Your cluster's name, the option to upgrade to a full cluster, and the option to 
 Cluster details like: cluster's location, and URI links for connecting to your cluster via APIs or other tools.
 Quick actions you can take to get started with your cluster.
 A list of databases in your cluster.
+
 If you already have a free cluster and just want to create a new database for this lab, use the Create button in the Create database tile.
 
 
 
-## Challenge 1, Task 2: Write your Kusto query to create table and ingest data from the storage
+### Challenge 1, Task 2: Write your Kusto query to create table and ingest data from the storage
 
 Before starting this task, 
 
@@ -106,14 +116,14 @@ Expected Learning Outcomes:
 Ingest data using one-click ingestion from Azure Blob Storage to your ADX cluster.
 
 
-## Challenge 1, Task 2.1: Create the raw table -logsRaw
+### Challenge 1, Task 2.1: Create the raw table -logsRaw
 
 Run the following command to create table:
 
 .create table logsRaw(Timestamp:datetime, Source:string, Node:string, Level:string, Component:string, ClientRequestId:string, Message:string, Properties:dynamic) 
 
 
-## Challenge 1, Task 2.2: Use the “One-click” UI (User Interface) to ingest data from Azure blob storage
+### Challenge 1, Task 2.2: Use the “One-click” UI (User Interface) to ingest data from Azure blob storage
 You need to analyze the logs for Contoso, which are stored in Azure blob storage.(dummy log files, EDR data is already uploaded in the real environment)
 Go back to the My Cluster page, click the Ingest button
 
@@ -164,14 +174,15 @@ A Kusto query is a read-only request to process data and return results. The req
 
 all_flow_events
 | take 10 
+
 This query has a single tabular expression statement. The statement begins with a reference to the table logsRaw and contains the operators take. Each operator is separated by a pipe.
 
 ### References:
 
-KQL cheat sheets
+[KQL cheat sheets](https://learn.microsoft.com/en-us/azure/data-explorer/kusto/query/sqlcheatsheet)
 
 
-## Challenge 2: Task 0 : Journey from SQL to KQL!
+### Challenge 2: Task 0 : Journey from SQL to KQL!
 
 The primary language to interact with Kusto is KQL (Kusto Query Language). To make the transition and learning experience easier, you can use 'explain' operator to translate SQL queries to KQL.
 
@@ -180,6 +191,7 @@ explain select top 10 * from enriched_flow_agg_1_min
 
 Output of the above query will be a corresponsing KQL query
 "Query": 
+
 enriched_flow_agg_1_min
 | project eventTimeWindowStart, eventTimeWindowEnd, flowRecord_keys_sessionId, flowRecord_subscriberInfo_imsi, sessionRecord_subscriberInfo_msisdn, sessionRecord_servingNetworkInfo_apnId, sessionRecord_servingNetworkInfo_nodeAddress, flowRecord_dpiStringInfo_application, recordCount, flowRecord_networkStatsInfo_downlinkFlowPeakThroughput, flowRecord_networkStatsInfo_downlinkFlowPeakThroughput_max, flowRecord_dataStats_downLinkOctets, flowRecord_networkStatsInfo_downlinkFlowActivityDuration, flowRecord_downlinkFlowCalculatedThroughput, flowRecord_networkStatsInfo_uplinkFlowPeakThroughput, flowRecord_networkStatsInfo_uplinkFlowPeakThroughput_max, flowRecord_dataStats_upLinkOctets, flowRecord_networkStatsInfo_uplinkFlowActivityDuration, flowRecord_uplinkFlowCalculatedThroughput, flowRecord_dataStats_downLinkDropOctets, flowRecord_dataStats_upLinkDropOctets, flowRecord_dataStats_downLinkPackets, flowRecord_dataStats_downLinkDropPackets, flowRecord_dataStats_downLinkTotalPackets, flowRecord_downLinkCalculatedPacketLoss_pct_max, flowRecord_dataStats_upLinkPackets, flowRecord_dataStats_upLinkDropPackets, flowRecord_dataStats_upLinkTotalPackets, flowRecord_upLinkCalculatedPacketLoss_pct_max, flowRecord_tcpRetransInfo_downlinkRetransBytes, flowRecord_downlinkCalculatedRetrans_pct_max, flowRecord_tcpRetransInfo_uplinkRetransBytes, flowRecord_uplinkCalculatedRetrans_pct_max, flowRecord_flowEdrRttInfo_downlinkMinRTT, flowRecord_flowEdrRttInfo_uplinkMinRTT, flowRecord_flowEdrRttInfo_downlinkMaxRTT, flowRecord_flowEdrRttInfo_uplinkMaxRTT, flowRecord_flowEdrRttInfo_downlinkAvgRTT_percentile_95, flowRecord_flowEdrRttInfo_uplinkAvgRTT_percentile_95, flowRecord_networkPerfInfo_initialRTTCalculatedTimeSecs, flowRecord_networkPerfInfo_downlinkInitialRTTCalculatedTimeSecs, flowRecord_networkPerfInfo_uplinkInitialRTTCalculatedTimeSecs, flowRecord_networkPerfInfo_initialRTTCalculatedTimeSecsRecordCount, flowRecord_networkPerfInfo_downlinkInitialRTTCalculatedTimeSecsRecordCount, flowRecord_networkPerfInfo_uplinkInitialRTTCalculatedTimeSecsRecordCount, delta_start_time, adx_start_time
 | take int(10)
@@ -188,24 +200,24 @@ enriched_flow_agg_1_min
 
 ### References:
 
-SQL to KQL cheat sheets - aka.ms/SQL2KQL
+[SQL to KQL cheat sheets](https://learn.microsoft.com/en-us/azure/data-explorer/kusto/query/sqlcheatsheet)
 
 
 
-## Challenge 2: Task 1 : Basic KQL queries-explore the data
+### Challenge 2: Task 1 : Basic KQL queries-explore the data
 
 1 min aggregrated view is present from session and flow tables.
 
 
 
-## Challenge 2: Query 1.0 : User is interested to view the schema of 1min aggregrated view of enriched flow table.
+### Challenge 2: Query 1.0 : User is interested to view the schema of 1min aggregrated view of enriched flow table.
 
 enriched_flow_agg_1_min
 | getschema
 
 
 
-## Challenge 2: Query 1.1 : User is interested to view the records in 1min agregrated enriched flow table where application is not empty and able to view only session id, uplinkOctets, downlink octets value with event time window start and end details
+### Challenge 2: Query 1.1 : User is interested to view the records in 1min agregrated enriched flow table where application is not empty and able to view only session id, uplinkOctets, downlink octets value with event time window start and end details
 
 KQL queries can be used to filter data and return specific information. Now, you'll learn how to choose specific rows of data.
 The where operator filters results that satisfy a certain condition- 
@@ -225,7 +237,7 @@ enriched_flow_agg_1_min
 
 
 
-## Challenge 2: Query 1.2 : User is interested to view the sum of total volume bytes or bites for maximum and minimum event time window start for all the flow records in enriched table on application level 
+### Challenge 2: Query 1.2 : User is interested to view the sum of total volume bytes or bites for maximum and minimum event time window start for all the flow records in enriched table on application level 
 
 Summarize-The input rows are arranged into groups having the same values of the by expressions. Then the specified aggregation functions are computed over each group, producing a row for each group. The result contains the by columns and also at least one column for each computed aggregate. (Some aggregation functions return multiple columns.)
 
@@ -233,12 +245,10 @@ The result has as many rows as there are distinct combinations of by values (whi
 To summarize over ranges of numeric values, use bin() to reduce ranges to discrete values.
 https://learn.microsoft.com/en-us/azure/data-explorer/kusto/query/sum-aggfunction
 
-https://learn.microsoft.com/en-us/azure/data-explorer/kusto/query/topoperator
-
-
-Sum function-https://learn.microsoft.com/en-us/azure/data-explorer/kusto/query/sum-aggfunction
-Min function-https://learn.microsoft.com/en-us/azure/data-explorer/kusto/query/min-aggfunction
-Max function-https://learn.microsoft.com/en-us/azure/data-explorer/kusto/query/max-aggfunction
+[top](https://learn.microsoft.com/en-us/azure/data-explorer/kusto/query/topoperator)
+[Sum function](https://learn.microsoft.com/en-us/azure/data-explorer/kusto/query/sum-aggfunction)
+[Min function](https://learn.microsoft.com/en-us/azure/data-explorer/kusto/query/min-aggfunction)
+[Max function](https://learn.microsoft.com/en-us/azure/data-explorer/kusto/query/max-aggfunction)
 
 enriched_flow_agg_1_min 
 | summarize maxTapp= max(eventTimeWindowStart), minTapp= min(eventTimeWindowStart),
@@ -248,10 +258,12 @@ enriched_flow_agg_1_min
 
 
 
-## Challenge 2: Query 1.3 :  While exploring more on dataset, user is now interested to drill down above query and check what would be volume of bytes and bites for each application in every 5 mins 
+### Challenge 2: Query 1.3 :  While exploring more on dataset, user is now interested to drill down above query and check what would be volume of bytes and bites for each application in every 5 mins 
 
 bin-The nearest multiple of roundTo below value. Null values, a null bin size, or a negative bin size will result in null.https://learn.microsoft.com/en-us/azure/data-explorer/kusto/query/binfunction
+
 extend-Create calculated columns and append them to the result set.https://learn.microsoft.com/en-us/azure/data-explorer/kusto/query/extendoperator
+
 project- https://learn.microsoft.com/en-us/azure/data-explorer/kusto/query/projectoperator
 
 Expression	Result
@@ -268,16 +280,17 @@ enriched_flow_agg_1_min
 | where eventTimeWindowStart between (minTapp .. maxTapp)
 | project minTapp,maxTapp,total_volume_bits, total_volume_bytes, flowRecord_dpiStringInfo_application
   
+  
 View should have below columns:
 <img width="444" alt="image" src="https://user-images.githubusercontent.com/78459999/220405408-b6d28068-fda6-4d1b-ba82-3db323ca10c3.png">
 
 
 
 
-## Challenge 2: Query 1.4 : User wanted to gain insights on the number of records which got aggregrated in 5 min view of above queries while getting a view on total volume on application level and sort total volume in descending order while viewing data (there is already column name in enriched view of flow which had record count value on 1 min view) for top 5 applications according to the total volume in bytes.
-
+### Challenge 2: Query 1.4 : User wanted to gain insights on the number of records which got aggregrated in 5 min view of above queries while getting a view on total volume on application level and sort total volume in descending order while viewing data (there is already column name in enriched view of flow which had record count value on 1 min view) for top 5 applications according to the total volume in bytes.
 
 sort- Sorts the rows of the input table into order by one or more columns.https://learn.microsoft.com/en-us/azure/data-explorer/kusto/query/sort-operator
+
 sum- top-Returns the first N records sorted by the specified columns. https://learn.microsoft.com/en-us/azure/data-explorer/kusto/query/topoperator
 
 enriched_flow_agg_1_min 
@@ -293,13 +306,17 @@ enriched_flow_agg_1_min
 | project minTapp,maxTapp,total_volume_bits, total_volume_bytes, flowRecord_dpiStringInfo_application, recordcount_in5min
   
 
-## Challenge 2: Query 1.5 : One of an other user wanted to view the active distinct users count in a day for last 7 days at application level.
+### Challenge 2: Query 1.5 : One of an other user wanted to view the active distinct users count in a day for last 7 days at application level.
 
 count_distinct-Counts unique values specified by the scalar expression per summary group, or the total number of unique values if the summary group is omitted.
 https://learn.microsoft.com/en-us/azure/data-explorer/kusto/query/count-distinct-aggfunction
+
 startofday-Returns the start of the day containing the date, shifted by an offset, if provided.
+
 format_datetime-Formats a datetime according to the provided format.https://learn.microsoft.com/en-us/azure/data-explorer/kusto/query/format-datetimefunction
+
 order by-
+
 project-
 
 
@@ -315,7 +332,7 @@ enriched_flow_agg_1_min
 
 
 
-## Challenge 2: Query 1.6: Try to write the above query by using variables with 'let' to optimize the main query
+### Challenge 2: Query 1.6: Try to write the above query by using variables with 'let' to optimize the main query
 
 Declaring variables and using 'let' statements 
 
@@ -355,8 +372,10 @@ enriched_flow_agg_1_min
  ## Challenge 2: Query 1.7:  Visualize the above query with render operator for top 10 applications and for empty application column, it should be marked as "UNDETECTED".
  
 RENDER OPERATOR: Instructs the user agent to render a visualization of the query results.
+
 The render operator must be the last operator in the query, and can only be used with queries that produce a single tabular data stream result. 
 The render operator does not modify data. It injects an annotation ("Visualization") into the result's extended properties. 
+
 https://learn.microsoft.com/en-us/azure/data-explorer/kusto/query/tutorial?pivots=azuredataexplorer#displaychartortable
 
 
@@ -376,9 +395,9 @@ enriched_flow_agg_1_min
  ## Challenge 2: Query 1.8:  User wanted to view flow records timechart for every 10 sec to get total volume in bytes where application is not empty ''.
  Looking for slicing an enriched table (containing session and flow records joined aggregrated view in 1 min) for total_volume_bytes in 1sec.
 
-bin- https://docs.microsoft.com/en-us/azure/data-explorer/kusto/query/binfunction
-summarize-
-render-
+[bin] (https://docs.microsoft.com/en-us/azure/data-explorer/kusto/query/binfunction)
+[summarize]
+[render]-
 
 //slice enriched table (containing session and flow records joined aggregrated view in 1 min) for total_volume_bytes in 1sec
 all_flow_events| 
@@ -387,8 +406,10 @@ summarize total_volume_bytes=(sum (toint(flowRecord_dataStats_downLinkOctets)) +
 top 10 by total_volume_bytes
 |render timechart
 
-Such kind of view
+Such kind of view:
+
 <img width="559" alt="image" src="https://user-images.githubusercontent.com/78459999/221203529-267e4750-30cd-4cbc-8050-c53a70263c00.png">
+
 
 <img width="597" alt="image" src="https://user-images.githubusercontent.com/78459999/221234303-357aea00-05a2-41af-b225-4b827108c6ce.png">
 
