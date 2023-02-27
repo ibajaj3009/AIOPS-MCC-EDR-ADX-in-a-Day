@@ -6,8 +6,11 @@ Welcome to Hands on Workshop on MCC-EDR Azure Data Explorer workshop.These chall
 ## Lab 1: Cluster Creation, Data Ingestion and Exploration 
 This Lab will focus on enabling the participants to Create a free ADX cluster, and ingest data into the cluster - One click ingestion of historic data , write some KQL queries and maintain dashboard for visualization
 Challenge Description Est. Time 
+
 Challenge 1 Create a free ADX cluster and load Data from Azure Storage 25 Min 
+
 Challenge 2 Starting with the basics of KQL 1 and Advance KQL Queries Data Exploration 1 hour 
+
 Challenge 3 Visualization through queries and dashboards 1hour
 
 Each challenge has a set of tasks that need to be completed in order to move on to the next challenge
@@ -71,6 +74,7 @@ Challenge 2	Starting with the basics of KQL	1 and Advance KQL Queries Data Explo
 
 Challenge 3 Visualization through queries and dashboards 1hour
 
+
 Each challenge has a set of tasks that need to be completed in order to move on to the next challenge
 
 ## Challenge 1: Create an ADX cluster and load Data from Azure Storage(the sample data to explore ADX features with one click ingestion.AIOps handles ingestion)
@@ -97,7 +101,6 @@ Quick actions you can take to get started with your cluster.
 A list of databases in your cluster.
 
 If you already have a free cluster and just want to create a new database for this lab, use the Create button in the Create database tile.
-
 
 
 ### Challenge 1, Task 2: Write your Kusto query to create table and ingest data from the storage
@@ -260,11 +263,11 @@ enriched_flow_agg_1_min
 
 ### Challenge 2: Query 1.3 :  While exploring more on dataset, user is now interested to drill down above query and check what would be volume of bytes and bites for each application in every 5 mins 
 
-bin-The nearest multiple of roundTo below value. Null values, a null bin size, or a negative bin size will result in null.https://learn.microsoft.com/en-us/azure/data-explorer/kusto/query/binfunction
+[bin](https://learn.microsoft.com/en-us/azure/data-explorer/kusto/query/binfunction)-The nearest multiple of roundTo below value. Null values, a null bin size, or a negative bin size will result in null.
 
-extend-Create calculated columns and append them to the result set.https://learn.microsoft.com/en-us/azure/data-explorer/kusto/query/extendoperator
+[extend](https://learn.microsoft.com/en-us/azure/data-explorer/kusto/query/extendoperator)-Create calculated columns and append them to the result set.
 
-project- https://learn.microsoft.com/en-us/azure/data-explorer/kusto/query/projectoperator
+[project](https://learn.microsoft.com/en-us/azure/data-explorer/kusto/query/projectoperator)
 
 Expression	Result
 bin(4.5,1)	4.0
