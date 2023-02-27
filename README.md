@@ -28,7 +28,7 @@ ADX capabilities are extended by other services built on its powerful query lang
 <img width="780" alt="image" src="https://user-images.githubusercontent.com/78459999/220305163-6f848629-0739-4514-b9b1-b44e824115b1.png">
 
 
-## Scenario
+# Scenario
 
 
 Contoso is an telecommunication enterprise company that is looking to gain some valuable insights from MCC EDR dataset which are getting generated at on premise MCC MSF server.They are looking for an option to stream the data on Azure Data Services and build the dashboard and reports. For that, they had deployed AIOps solution in their Azure environment for ingestion in delta lake format and streamed cleaned data in Azure Data Explorer Service with an enriched table having 1min aggregrated view of session and flow tables.
@@ -38,12 +38,13 @@ Contoso is an telecommunication enterprise company that is looking to gain some 
 
 
 
-One of the Contoso's Business Analyst planning to explore data in ADX and check its ingestion features, explore streaming data in ADX for enriched flow table and looking for the below usecases to be build on dashboards:
+One of the Contoso's Business Analyst planning to explore data in ADX and check its ingestion features, explore streaming data in ADX for enriched flow table and looking for the below usecases to be built on dashboards:
  
 1. Total volume computation at Application level.
 2. Total active users per day for top 10 application.
 
-This workshop walks through the steps in designing, creating, and configuring Azure Data Explorer clusters keeping in mind these requirements.Once the cluster is deployed, this workshop enlists the steps to ingest data into ADX databases and tables using One Click ingestion for sample run.
+This workshop walks through the steps in designing, creating, and configuring Azure Data Explorer clusters keeping in mind these requirements.
+Once the cluster is deployed, this workshop enlists the steps to ingest data into ADX databases and tables using One Click ingestion for sample run.
 
 
 ### Pre-requisites
@@ -64,17 +65,6 @@ Ready to go? Click on the below links to start the challenges
 
 
 # Lab 1: Cluster Creation, Data Ingestion, Exploration and Visualization
-
-This Lab is organized into the following 4 Challenges:
-
-Challenge	Description	Est. Time
-
-Challenge 1	Create a free ADX cluster	and load Data from Azure Storage	25 Min
-
-Challenge 2	Starting with the basics of KQL	1 and Advance KQL Queries Data Exploration	1 hour
-
-Challenge 3 Visualization through queries and dashboards 1hour
-
 
 Each challenge has a set of tasks that need to be completed in order to move on to the next challenge
 
