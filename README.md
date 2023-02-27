@@ -3,7 +3,7 @@
 Welcome to Hands on Workshop on MCC-EDR Azure Data Explorer workshop.These challenges are discover by doing experience.
 
 
-## Lab 1: Cluster Creation, Data Ingestion and Exploration 
+# Lab 1: Cluster Creation, Data Ingestion and Exploration 
 This Lab will focus on enabling the participants to Create a free ADX cluster, and ingest data into the cluster - One click ingestion of historic data , write some KQL queries and maintain dashboard for visualization.
 
 Challenge Description Est. Time 
@@ -64,7 +64,7 @@ Generally, when starting with Azure Data Explorer, you will follow the following
 Ready to go? Click on the below links to start the challenges
 
 
-# Lab 1: Cluster Creation, Data Ingestion, Exploration and Visualization
+## Lab 1: Cluster Creation, Data Ingestion, Exploration and Visualization
 
 Each challenge has a set of tasks that need to be completed in order to move on to the next challenge
 
