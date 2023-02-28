@@ -43,7 +43,7 @@ This workshop walks through the steps of designing, creating, and configuring Az
 Once the cluster is deployed, this workshop lists the steps to ingest data into ADX databases and tables using One Click ingestion for a sample run.
 
 
-### Pre-requisites
+**Pre-requisites**
 Either a Microsoft account (MSA) or an Azure Active Directory (AAD) identity. This will be used to create free cluster.
 
 
