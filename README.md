@@ -59,11 +59,6 @@ Generally, when starting with Azure Data Explorer, you will follow the following
 
 Ready to go? Click on the below links to start the challenges
 
-
-# Lab 1: Cluster Creation, Data Ingestion, Exploration and Visualization
-
-Each challenge has a set of tasks that need to be completed in order to move on to the next challenge
-
 ## Challenge 1: Create an ADX cluster and load data from Azure Storage (the sample data to explore ADX features with one click ingestion. AIOps handles ingestion)
 To use Azure Data Explorer (ADX), you first have to create a free ADX cluster, and create one or more databases in that cluster. Each database has tables. Then you can ingest data into a database so that you can run queries against it.
 
@@ -94,7 +89,7 @@ If you already have a free cluster and just want to create a new database for th
 
 Before starting this task, 
 
-## What is a Kusto query?
+#### What is a Kusto query?
 Azure Data Explorer provides a web experience that enables you to connect to your Azure Data Explorer clusters and write and run Kusto Query Language queries. 
 
 1. The web experience is available in the Azure portal and as a stand-alone web application, the Azure Data Explorer Web UI, which we will use later.
