@@ -330,11 +330,12 @@ enriched_flow_agg_1_min
 | project
     format_datetime(eventTimeWindowStart, "yyyy-MM-dd"),
     distinct_flowRecord_subscriberInfo_imsi,
-    flowRecord_dpiStringInfo_application;
+    flowRecord_dpiStringInfo_application
 ```
 
 
-### Challenge 2: Query 1.6: Try to write the above query by using variables with 'let' to optimize the main query
+### Challenge 2, Query 1.6: Optimisation with let operator
+**Try to write the above query by using variables with 'let' to optimize the main query**
 
 Declaring variables and using 'let' statements 
 
@@ -342,21 +343,22 @@ You can use the 'let' statement to set a variable name equal to an expression or
 
 let statements are useful for:
 
-Breaking up a complex expression into multiple parts, each represented by a variable.
-Defining constants outside of the query body for readability.
-Defining a variable once and using it multiple times within a query.
-For example, you can use 2 'let' statements to create "LogType" and "TimeBucket" variables with the following values:
+* Breaking up a complex expression into multiple parts, each represented by a variable.
+* Defining constants outside of the query body for readability.
+* Defining a variable once and using it multiple times within a query.
 
+For example, you can use 2 'let' statements to create "LogType" and "TimeBucket" variables with the following values:
+```
 let lookbackduration=7d; // Specify lookback duration
 let maxTapp =  toscalar(enriched_flow_agg_1_min | summarize max(eventTimeWindowStart)); 
 let minTapp = maxTapp - lookbackduration;
-
+```
 Remember to include a ";" at the end of your let statement.
 
 
-toscalar-Returns a scalar constant value of the evaluated expression.This function is useful for queries that require staged calculations. For example, calculate a total count of events, and then use the result to filter groups that exceed a certain percent of all events.
+*[toscalar]() - Returns a scalar constant value of the evaluated expression.This function is useful for queries that require staged calculations. For example, calculate a total count of events, and then use the result to filter groups that exceed a certain percent of all events.
 
-
+```
 let lookbackduration=7d; // Specify lookback duration
 let maxTapp =  toscalar(enriched_flow_agg_1_min | summarize max(eventTimeWindowStart));
 let minTapp = maxTapp - lookbackduration;
@@ -368,10 +370,11 @@ enriched_flow_agg_1_min
     format_datetime(eventTimeWindowStart, "yyyy-MM-dd"),
     distinct_flowRecord_subscriberInfo_imsi,
     flowRecord_dpiStringInfo_application;
+ ```
  
  
- 
- ## Challenge 2: Query 1.7:  Visualize the above query with render operator for top 10 applications and for empty application column, it should be marked as "UNDETECTED".
+ ## Challenge 2, Query 1.7:  Visualization with render operator
+ **Visualize the above query with render operator for top 10 applications and for empty application column, it should be marked as "UNDETECTED".**
  
 RENDER OPERATOR: Instructs the user agent to render a visualization of the query results.
 
@@ -380,7 +383,7 @@ The render operator does not modify data. It injects an annotation ("Visualizati
 
 https://learn.microsoft.com/en-us/azure/data-explorer/kusto/query/tutorial?pivots=azuredataexplorer#displaychartortable
 
-
+```
 let lookbackduration=7d; // Specify lookback duration
 let maxTapp =  toscalar(enriched_flow_agg_1_min | summarize max(eventTimeWindowStart));
 let minTapp = maxTapp - lookbackduration;
@@ -391,22 +394,24 @@ enriched_flow_agg_1_min
 | order by distinct_flowRecord_subscriberInfo_imsi desc//eventTimeWindowStart
 | top 10 by distinct_flowRecord_subscriberInfo_imsi
 | render piechart
-  
+```
   
  
- ## Challenge 2: Query 1.8:  User wanted to view flow records timechart for every 10 sec to get total volume in bytes where application is not empty ''.
- Looking for slicing an enriched table (containing session and flow records joined aggregrated view in 1 min) for total_volume_bytes in 1sec.
+## Challenge 2, Query 1.8: Timecharts
+**User wanted to view flow records timechart for every 10 sec to get total volume in bytes where application is not empty ''.**
+Looking for slicing an enriched table (containing session and flow records joined aggregated view in 1 min) for total_volume_bytes in 1sec.
 
-[bin] (https://docs.microsoft.com/en-us/azure/data-explorer/kusto/query/binfunction)
-[summarize]
-[render]-
+* [bin] (https://docs.microsoft.com/en-us/azure/data-explorer/kusto/query/binfunction)
+* [summarize]
+* [render]-
 
-//slice enriched table (containing session and flow records joined aggregrated view in 1 min) for total_volume_bytes in 1sec
-all_flow_events| 
-summarize total_volume_bytes=(sum (toint(flowRecord_dataStats_downLinkOctets)) + sum(toint(flowRecord_dataStats_upLinkOctets))) by bin(eventTime,10s)
+```
+all_flow_events
+| summarize total_volume_bytes=(sum (toint(flowRecord_dataStats_downLinkOctets)) + sum(toint(flowRecord_dataStats_upLinkOctets))) by bin(eventTime,10s)
 ,flowRecord_dpiStringInfo_application=case(isempty(flowRecord_dpiStringInfo_application),"UNDETECTED", flowRecord_dpiStringInfo_application)|
 top 10 by total_volume_bytes
 |render timechart
+```
 
 Such kind of view:
 
@@ -416,13 +421,13 @@ Such kind of view:
 <img width="597" alt="image" src="https://user-images.githubusercontent.com/78459999/221234303-357aea00-05a2-41af-b225-4b827108c6ce.png">
 
 
-#Challenge 3: Visualize with ADX dashboards
+# Challenge 3: Visualize with ADX dashboards
 
-##Challenge 3, Task 1: Prepare interactive dashboards with ADX Dashboard 
+## Challenge 3, Task 1: Prepare interactive dashboards with ADX Dashboard 
 
 Azure Data Explorer is a fast and highly scalable data exploration service for log and telemetry data. Explore your data from end-to-end in the Azure Data Explorer web application, starting with data ingestion, running queries, and ultimately building dashboards.
 
-pin a query from the query tab of the web UI.
+Pin a query from the query tab of the web UI.
 
 <img width="668" alt="image" src="https://user-images.githubusercontent.com/78459999/221235181-cf7c61ee-b7ae-44f8-8436-db440ebb51d6.png">
 
