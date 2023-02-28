@@ -1,6 +1,6 @@
 # AIOPS MCC EDR Azure Data Explorer in a day
 
-Welcome to Hands on Workshop on MCC-EDR Azure Data Explorer workshop.These challenges are discover by doing experience.
+Welcome to Hands-On Workshop on MCC-EDR Azure Data Explorer. Azure Data Explorer and Kusto queries might be overwhelming in the beginning, but this challenge can be overcome with practice!
 
 
 # Lab 1: Cluster Creation, Data Ingestion, Exploration and Visualization
