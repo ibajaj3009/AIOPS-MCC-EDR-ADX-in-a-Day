@@ -69,8 +69,8 @@ In this Challenge, you will create a Free cluster and a database. You will run s
 Create and work with Free ADX cluster.
 
 
-### Challenge 1, Task 1: Create an ADX cluster and Database and review the free cluster home page and the Azure Data Explorer Web UI
-
+### Challenge 1, Task 1: Create an ADX cluster and Database
+**Create an ADX cluster and Database and review the free cluster home page and the Azure Data Explorer Web UI**
 Create your free cluster and database here: https://aka.ms/kustofree.
 
 <img width="515" alt="image" src="https://user-images.githubusercontent.com/78459999/220317774-d3de5eba-1a6c-4c70-bdeb-06ea67280f9b.png">
@@ -85,7 +85,8 @@ On your My Cluster page, you'll see the following:
 If you already have a free cluster and just want to create a new database for this lab, use the Create button in the Create database tile.
 
 
-### Challenge 1, Task 2: Write your Kusto query to create table and ingest data from the storage
+### Challenge 1, Task 2: Write your first Kusto query
+**Write your first Kusto query to create table and ingest data from the storage**
 
 Before starting this task, 
 
@@ -101,7 +102,7 @@ Azure Data Explorer provides a web experience that enables you to connect to you
 Ingest data using one-click ingestion from Azure Blob Storage to your ADX cluster.
 
 
-#### Challenge 1, Task 2.1: Create the raw table -logsRaw
+#### Challenge 1, Task 2.1: Create the raw table `-logsRaw`
 
 Run the following command to create table:
 
@@ -110,7 +111,9 @@ Run the following command to create table:
 ```
 
 
-#### Challenge 1, Task 2.2: Use the “One-click” UI (User Interface) to ingest data from Azure blob storage
+#### Challenge 1, Task 2.2: Use the “One-click” ingestion
+**Use the “One-click” ingestion UI (User Interface) to ingest data from Azure blob storage**
+
 You need to analyze the logs for Contoso, which are stored in Azure blob storage (Dummy log files, EDR data is already uploaded in the real environment).
 Go back to the My Cluster page, click the Ingest button
 
@@ -142,8 +145,8 @@ logsRaw
 | count
 ```
 
-## Challenge 2: Basics of KQL and Advanced KQL (run on the customer EDR Subscription resource for ADX)
-
+## Challenge 2: Basics of KQL and Advanced KQL
+**Basics of KQL and Advanced KQL (run on the customer EDR Subscription resource for ADX)**
 Learn how to write KQL queries to explore and gain insights from your data
 
 **Expected Learning Outcomes:**
@@ -180,7 +183,7 @@ The primary language to interact with Kusto is KQL (Kusto Query Language). To ma
 explain select top 10 * from enriched_flow_agg_1_min 
 ```
 
-Output of the above query will be a corresponsing KQL query:
+Output of the above query will be a corresponding KQL query:
 ```
 enriched_flow_agg_1_min
 | project eventTimeWindowStart, eventTimeWindowEnd, flowRecord_keys_sessionId, flowRecord_subscriberInfo_imsi, sessionRecord_subscriberInfo_msisdn, sessionRecord_servingNetworkInfo_apnId, sessionRecord_servingNetworkInfo_nodeAddress, flowRecord_dpiStringInfo_application, recordCount, flowRecord_networkStatsInfo_downlinkFlowPeakThroughput, flowRecord_networkStatsInfo_downlinkFlowPeakThroughput_max, flowRecord_dataStats_downLinkOctets, flowRecord_networkStatsInfo_downlinkFlowActivityDuration, flowRecord_downlinkFlowCalculatedThroughput, flowRecord_networkStatsInfo_uplinkFlowPeakThroughput, flowRecord_networkStatsInfo_uplinkFlowPeakThroughput_max, flowRecord_dataStats_upLinkOctets, flowRecord_networkStatsInfo_uplinkFlowActivityDuration, flowRecord_uplinkFlowCalculatedThroughput, flowRecord_dataStats_downLinkDropOctets, flowRecord_dataStats_upLinkDropOctets, flowRecord_dataStats_downLinkPackets, flowRecord_dataStats_downLinkDropPackets, flowRecord_dataStats_downLinkTotalPackets, flowRecord_downLinkCalculatedPacketLoss_pct_max, flowRecord_dataStats_upLinkPackets, flowRecord_dataStats_upLinkDropPackets, flowRecord_dataStats_upLinkTotalPackets, flowRecord_upLinkCalculatedPacketLoss_pct_max, flowRecord_tcpRetransInfo_downlinkRetransBytes, flowRecord_downlinkCalculatedRetrans_pct_max, flowRecord_tcpRetransInfo_uplinkRetransBytes, flowRecord_uplinkCalculatedRetrans_pct_max, flowRecord_flowEdrRttInfo_downlinkMinRTT, flowRecord_flowEdrRttInfo_uplinkMinRTT, flowRecord_flowEdrRttInfo_downlinkMaxRTT, flowRecord_flowEdrRttInfo_uplinkMaxRTT, flowRecord_flowEdrRttInfo_downlinkAvgRTT_percentile_95, flowRecord_flowEdrRttInfo_uplinkAvgRTT_percentile_95, flowRecord_networkPerfInfo_initialRTTCalculatedTimeSecs, flowRecord_networkPerfInfo_downlinkInitialRTTCalculatedTimeSecs, flowRecord_networkPerfInfo_uplinkInitialRTTCalculatedTimeSecs, flowRecord_networkPerfInfo_initialRTTCalculatedTimeSecsRecordCount, flowRecord_networkPerfInfo_downlinkInitialRTTCalculatedTimeSecsRecordCount, flowRecord_networkPerfInfo_uplinkInitialRTTCalculatedTimeSecsRecordCount, delta_start_time, adx_start_time
@@ -200,7 +203,8 @@ enriched_flow_agg_1_min
 
 
 
-### Challenge 2, Query 1.0: User is interested to view the schema of 1min aggregated view of enriched flow table.
+### Challenge 2, Query 1.0: Schema
+**User is interested to view the schema of 1min aggregated view of enriched flow table.**
 
 ```
 enriched_flow_agg_1_min
@@ -208,7 +212,8 @@ enriched_flow_agg_1_min
 ```
 
 
-### Challenge 2, Query 1.1: User is interested to view the records in 1min aggregated enriched flow table, where application is not empty and able to view only session id, uplinkOctets, downlink octets value with event time window start and end details
+### Challenge 2, Query 1.1: Records selection
+**User is interested to view the records in 1min aggregated enriched flow table, where application is not empty and able to view only session id, uplinkOctets, downlink octets value with event time window start and end details**
 
 KQL queries can be used to filter data and return specific information. Now, you'll learn how to choose specific rows of data.
 
@@ -231,7 +236,8 @@ enriched_flow_agg_1_min
 ```
 
 
-### Challenge 2, Query 1.2: User is interested to view the sum of total volume bytes for maximum and minimum event time window start for all the flow records in enriched table on application level 
+### Challenge 2, Query 1.2: Records aggregation
+**User is interested to view the sum of total volume bytes and bits for maximum and minimum event time window start for all the flow records in enriched table on application level**
 
 Summarize. The input rows are arranged into groups having the same values of the *by* expressions. Then the specified aggregation functions are computed over each group, producing a row for each group. The result contains the *by* columns and also at least one column for each computed aggregate. (Some aggregation functions return multiple columns.)
 
@@ -253,19 +259,22 @@ enriched_flow_agg_1_min
 ```
 
 
-### Challenge 2: Query 1.3 :  While exploring more on dataset, user is now interested to drill down above query and check what would be volume of bytes and bites for each application in every 5 mins 
+### Challenge 2, Query 1.3: Time bins
+**While exploring more on dataset, user is now interested to drill down above query and check what would be volume of bytes and bits for each application in every 5 mins** 
 
-[bin](https://learn.microsoft.com/en-us/azure/data-explorer/kusto/query/binfunction)-The nearest multiple of roundTo below value. Null values, a null bin size, or a negative bin size will result in null.
+* [bin](https://learn.microsoft.com/en-us/azure/data-explorer/kusto/query/binfunction) - The nearest multiple of roundTo below value. Null values, a null bin size, or a negative bin size will result in null.
 
-[extend](https://learn.microsoft.com/en-us/azure/data-explorer/kusto/query/extendoperator)-Create calculated columns and append them to the result set.
+* [extend](https://learn.microsoft.com/en-us/azure/data-explorer/kusto/query/extendoperator) - Create calculated columns and append them to the result set.
 
-[project](https://learn.microsoft.com/en-us/azure/data-explorer/kusto/query/projectoperator)
+* [project](https://learn.microsoft.com/en-us/azure/data-explorer/kusto/query/projectoperator)
 
-Expression	Result
-bin(4.5,1)	4.0
-bin(time(16d),7d)	14d
-bin(datetime(1970-05-11 13:45:07),1d)	datetime(1970-05-11)
+|Expression	| Result|
+|----|----|
+|`bin(4.5,1)`	| 4.0|
+|`bin(time(16d),7d)` |	14d|
+|`bin(datetime(1970-05-11 13:45:07),1d)`|	datetime(1970-05-11)|
 
+```
 enriched_flow_agg_1_min 
 | summarize maxTapp= max(eventTimeWindowStart),
     total_volume_bytes=(sum(flowRecord_dataStats_downLinkOctets) + sum(flowRecord_dataStats_upLinkOctets)),
@@ -274,7 +283,7 @@ enriched_flow_agg_1_min
 | extend minTapp = maxTapp - 5m 
 | where eventTimeWindowStart between (minTapp .. maxTapp)
 | project minTapp,maxTapp,total_volume_bits, total_volume_bytes, flowRecord_dpiStringInfo_application
-  
+```
   
 View should have below columns:
 <img width="444" alt="image" src="https://user-images.githubusercontent.com/78459999/220405408-b6d28068-fda6-4d1b-ba82-3db323ca10c3.png">
