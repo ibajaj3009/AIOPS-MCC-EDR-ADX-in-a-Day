@@ -59,12 +59,12 @@ Generally, when starting with Azure Data Explorer, you will follow the following
 
 Ready to go? Click on the below links to start the challenges
 
-## Challenge 1: Create an ADX cluster and load data from Azure Storage (the sample data to explore ADX features with one click ingestion. AIOps handles ingestion)
+## Challenge 1: Create an ADX cluster and load data from Azure Storage
 To use Azure Data Explorer (ADX), you first have to create a free ADX cluster, and create one or more databases in that cluster. Each database has tables. Then you can ingest data into a database so that you can run queries against it.
 
 In this Challenge, you will create a Free cluster and a database. You will run simple KQL query in Kusto Web Explorer (KWE UI).
 
-## Expected Learning Outcomes:
+**Expected Learning Outcomes:**
 
 Create and work with Free ADX cluster.
 
@@ -96,33 +96,36 @@ Azure Data Explorer provides a web experience that enables you to connect to you
 
 2. A Kusto query is a read-only request to process data and return results. The request is stated in plain text that's easy to read. A Kusto query has one or more query statements and returns data in a tabular or graph format.
 
-Expected Learning Outcomes:
+**Expected Learning Outcomes:**
 
 Ingest data using one-click ingestion from Azure Blob Storage to your ADX cluster.
 
 
-### Challenge 1, Task 2.1: Create the raw table -logsRaw
+#### Challenge 1, Task 2.1: Create the raw table -logsRaw
 
 Run the following command to create table:
 
+```
 .create table logsRaw(Timestamp:datetime, Source:string, Node:string, Level:string, Component:string, ClientRequestId:string, Message:string, Properties:dynamic) 
+```
 
 
-### Challenge 1, Task 2.2: Use the “One-click” UI (User Interface) to ingest data from Azure blob storage
-You need to analyze the logs for Contoso, which are stored in Azure blob storage.(dummy log files, EDR data is already uploaded in the real environment)
+#### Challenge 1, Task 2.2: Use the “One-click” UI (User Interface) to ingest data from Azure blob storage
+You need to analyze the logs for Contoso, which are stored in Azure blob storage (Dummy log files, EDR data is already uploaded in the real environment).
 Go back to the My Cluster page, click the Ingest button
 
 <img width="506" alt="image" src="https://user-images.githubusercontent.com/78459999/220137856-248fb10f-7289-4c04-9e6d-47a43f7507b2.png">
 
-Make sure the cluster and the Database fields are correct. Select Existing table or create new table.
+Make sure the cluster and the database fields are correct. Select Existing table or create new table.
 
 <img width="284" alt="image" src="https://user-images.githubusercontent.com/78459999/220138467-faa62871-ff9a-480c-9772-c0938b54b3d7.png">
 
 Ingest from Storage: Select "Blob container" as the Source type in the Source tab.
 In the Link to source, paste the following SAS (Shared Access Signature) URL of the blob storage. SAS URL is a way to provide limited, time-bound access to Azure storage resources such as Blobs.
 
+```
 https://logsbenchmark00.blob.core.windows.net/logsbenchmark-onegb/2014/?sp=rl&st=2022-08-18T00:00:00Z&se=2030-
-
+```
 
 Select one of the Schema defining file (one is autoselected unless you want to change that) and click Next
 <img width="415" alt="image" src="https://user-images.githubusercontent.com/78459999/220139142-43690310-b232-4e98-9fee-ccf8ea6641d9.png">
@@ -134,9 +137,10 @@ Wait for the ingestion to be completed, and click Close.
 
 Go to the Query page. Run the following KQL query to verify that data was ingested to the table. The logsRaw table should have 3834012 records
 
+```
 logsRaw
-  | count
-
+| count
+```
 
 ## Challenge 2 : Basics of KQL and Advanced KQL( run on the customer EDR Subscription resource for ADX)
 
@@ -176,11 +180,11 @@ explain select top 10 * from enriched_flow_agg_1_min
 
 Output of the above query will be a corresponsing KQL query
 "Query": 
-
+```
 enriched_flow_agg_1_min
 | project eventTimeWindowStart, eventTimeWindowEnd, flowRecord_keys_sessionId, flowRecord_subscriberInfo_imsi, sessionRecord_subscriberInfo_msisdn, sessionRecord_servingNetworkInfo_apnId, sessionRecord_servingNetworkInfo_nodeAddress, flowRecord_dpiStringInfo_application, recordCount, flowRecord_networkStatsInfo_downlinkFlowPeakThroughput, flowRecord_networkStatsInfo_downlinkFlowPeakThroughput_max, flowRecord_dataStats_downLinkOctets, flowRecord_networkStatsInfo_downlinkFlowActivityDuration, flowRecord_downlinkFlowCalculatedThroughput, flowRecord_networkStatsInfo_uplinkFlowPeakThroughput, flowRecord_networkStatsInfo_uplinkFlowPeakThroughput_max, flowRecord_dataStats_upLinkOctets, flowRecord_networkStatsInfo_uplinkFlowActivityDuration, flowRecord_uplinkFlowCalculatedThroughput, flowRecord_dataStats_downLinkDropOctets, flowRecord_dataStats_upLinkDropOctets, flowRecord_dataStats_downLinkPackets, flowRecord_dataStats_downLinkDropPackets, flowRecord_dataStats_downLinkTotalPackets, flowRecord_downLinkCalculatedPacketLoss_pct_max, flowRecord_dataStats_upLinkPackets, flowRecord_dataStats_upLinkDropPackets, flowRecord_dataStats_upLinkTotalPackets, flowRecord_upLinkCalculatedPacketLoss_pct_max, flowRecord_tcpRetransInfo_downlinkRetransBytes, flowRecord_downlinkCalculatedRetrans_pct_max, flowRecord_tcpRetransInfo_uplinkRetransBytes, flowRecord_uplinkCalculatedRetrans_pct_max, flowRecord_flowEdrRttInfo_downlinkMinRTT, flowRecord_flowEdrRttInfo_uplinkMinRTT, flowRecord_flowEdrRttInfo_downlinkMaxRTT, flowRecord_flowEdrRttInfo_uplinkMaxRTT, flowRecord_flowEdrRttInfo_downlinkAvgRTT_percentile_95, flowRecord_flowEdrRttInfo_uplinkAvgRTT_percentile_95, flowRecord_networkPerfInfo_initialRTTCalculatedTimeSecs, flowRecord_networkPerfInfo_downlinkInitialRTTCalculatedTimeSecs, flowRecord_networkPerfInfo_uplinkInitialRTTCalculatedTimeSecs, flowRecord_networkPerfInfo_initialRTTCalculatedTimeSecsRecordCount, flowRecord_networkPerfInfo_downlinkInitialRTTCalculatedTimeSecsRecordCount, flowRecord_networkPerfInfo_uplinkInitialRTTCalculatedTimeSecsRecordCount, delta_start_time, adx_start_time
 | take int(10)
-
+```
 
 
 ### References:
