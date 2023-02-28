@@ -231,11 +231,11 @@ enriched_flow_agg_1_min
 ```
 
 
-### Challenge 2: Query 1.2 : User is interested to view the sum of total volume bytes or bites for maximum and minimum event time window start for all the flow records in enriched table on application level 
+### Challenge 2, Query 1.2: User is interested to view the sum of total volume bytes for maximum and minimum event time window start for all the flow records in enriched table on application level 
 
-Summarize-The input rows are arranged into groups having the same values of the by expressions. Then the specified aggregation functions are computed over each group, producing a row for each group. The result contains the by columns and also at least one column for each computed aggregate. (Some aggregation functions return multiple columns.)
+Summarize. The input rows are arranged into groups having the same values of the *by* expressions. Then the specified aggregation functions are computed over each group, producing a row for each group. The result contains the *by* columns and also at least one column for each computed aggregate. (Some aggregation functions return multiple columns.)
 
-The result has as many rows as there are distinct combinations of by values (which may be zero). If there are no group keys provided, the result has a single record.
+The result has as many rows as there are distinct combinations of *by* values (which may be zero). If there are no group keys provided, the result has a single record.
 To summarize over ranges of numeric values, use bin() to reduce ranges to discrete values.
 [bin](https://learn.microsoft.com/en-us/azure/data-explorer/kusto/query/sum-aggfunction)
 
@@ -244,13 +244,13 @@ To summarize over ranges of numeric values, use bin() to reduce ranges to discre
 [Min function](https://learn.microsoft.com/en-us/azure/data-explorer/kusto/query/min-aggfunction)
 [Max function](https://learn.microsoft.com/en-us/azure/data-explorer/kusto/query/max-aggfunction)
 
-
+```
 enriched_flow_agg_1_min 
 | summarize maxTapp= max(eventTimeWindowStart), minTapp= min(eventTimeWindowStart),
   total_volume_bytes=(sum(flowRecord_dataStats_downLinkOctets) + sum(flowRecord_dataStats_upLinkOctets)),
   total_volume_bits=(sum(flowRecord_dataStats_downLinkOctets) + sum(flowRecord_dataStats_upLinkOctets)) * 8 
-| project maxTapp,minTapp, total_volume_bits,total_volume_bytes
-
+| project maxTapp, minTapp, total_volume_bits,total_volume_bytes
+```
 
 
 ### Challenge 2: Query 1.3 :  While exploring more on dataset, user is now interested to drill down above query and check what would be volume of bytes and bites for each application in every 5 mins 
