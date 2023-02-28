@@ -4,18 +4,15 @@ Welcome to Hands-On Workshop on MCC-EDR Azure Data Explorer. Azure Data Explorer
 
 
 # Lab 1: Cluster Creation, Data Ingestion, Exploration and Visualization
-This Lab will focus on enabling the participants to Create a free ADX cluster, and ingest data into the cluster - One click ingestion of historic data , write some KQL queries and maintain dashboard for visualization.
+This Lab will focus on enabling the participants to create a free ADX cluster and ingest data into the cluster (one click ingestion of historic data), write some KQL queries and maintain dashboard for visualization.
 
-Challenge Description Est. Time 
+| Challenge Description | Estimated Time|
+|-----------------------|----------------|
+|**Challenge 1.** Create a free ADX cluster and load data from Azure Storage | 25 Min |
+|**Challenge 2.** Starting with the basics of KQL 1 and Advance KQL Queries Data Exploration|1 hour |
+|**Challenge 3.** Visualization through queries and dashboards | 1hour|
 
-Challenge 1 Create a free ADX cluster and load Data from Azure Storage 25 Min 
-
-Challenge 2 Starting with the basics of KQL 1 and Advance KQL Queries Data Exploration 1 hour 
-
-Challenge 3 Visualization through queries and dashboards 1hour
-
-Each challenge has a set of tasks that need to be completed in order to move on to the next challenge
-
+Each challenge has a set of tasks that needs to be completed in order to move on to the next challenge.
 
 ## What is Data Explorer and when is it a good fit?
 1. Data Explorer is a fully managed, high-performance, big data analytics platform that makes it easy to analyze high volumes of data in near real time. The Azure Data Explorer toolbox gives you an end-to-end solution for data ingestion, query, visualization, and management.
