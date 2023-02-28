@@ -340,18 +340,22 @@ enriched_flow_agg_1_min
 
 ### Challenge 2, Query 1.5: Count distinct values
 
-**One of an other user wanted to view the active distinct users count in a day for last 7 days at application level.**
+**One of an other user wanted to view the active distinct users count in a day for the last 7 days(eventTimeWindowStart) at application level**
+
+<img width="348" alt="image" src="https://user-images.githubusercontent.com/78459999/221916047-d300e401-7c31-4878-ac65-79a5e3a5a47c.png">
 
 * [count_distinct](https://learn.microsoft.com/en-us/azure/data-explorer/kusto/query/count-distinct-aggfunction) - Counts unique values specified by the scalar expression per summary group, or the total number of unique values if the summary group is omitted.
-* [startofday]() - Returns the start of the day containing the date, shifted by an offset, if provided.
+* [startofday](https://learn.microsoft.com/en-us/azure/data-explorer/kusto/query/startofdayfunction) - Returns the start of the day containing the date, shifted by an offset, if provided.
 * [format_datetime](https://learn.microsoft.com/en-us/azure/data-explorer/kusto/query/format-datetimefunction) - Formats a datetime according to the provided format.
-* [order by]() -
+* [order by or sort by](https://learn.microsoft.com/en-us/azure/data-explorer/kusto/query/sort-operator) -
 * [project](https://learn.microsoft.com/en-us/azure/data-explorer/kusto/query/projectoperator)
 
 
 ```
 enriched_flow_agg_1_min 
-| summarize maxTapp= max(eventTimeWindowStart), distinct_flowRecord_subscriberInfo_imsi= dcount(flowRecord_subscriberInfo_imsi) by startofday(eventTimeWindowStart),flowRecord_dpiStringInfo_application
+| summarize maxTapp= max(eventTimeWindowStart), 
+  distinct_flowRecord_subscriberInfo_imsi= count_distinct(flowRecord_subscriberInfo_imsi)
+  by startofday(eventTimeWindowStart),flowRecord_dpiStringInfo_application
 | extend minTapp=maxTapp-7d
 | where eventTimeWindowStart between (minTapp .. maxTapp)
 | order by eventTimeWindowStart
@@ -369,7 +373,7 @@ Declaring variables and using 'let' statements
 
 You can use the 'let' statement to set a variable name equal to an expression or a function, or to create views (virtual, temporary, tables based on the result-set of another KQL query).
 
-let statements are useful for:
+[let](https://learn.microsoft.com/en-us/azure/data-explorer/kusto/query/letstatement) statements are useful for:
 
 * Breaking up a complex expression into multiple parts, each represented by a variable.
 * Defining constants outside of the query body for readability.
@@ -402,12 +406,23 @@ enriched_flow_agg_1_min
  
  
  ## Challenge 2, Query 1.7:  Visualization with render operator
- **Visualize the above query with render operator for top 10 applications and for empty application column, it should be marked as "UNDETECTED".**
+ **Visualize the above query with render operator(piechart) for top 10 applications with the distinct count of users in the descending order and for empty application column, it should be marked as "UNDETECTED".**
  
-RENDER OPERATOR: Instructs the user agent to render a visualization of the query results.
+ 
+ <img width="280" alt="image" src="https://user-images.githubusercontent.com/78459999/221929538-41d72ad2-905d-4491-bcfc-c2797d103791.png">
+
+ 
+* [render](https://learn.microsoft.com/en-us/azure/data-explorer/kusto/query/renderoperator?pivots=azuredataexplorer): Instructs the user agent to render a visualization of the query results.
 
 The render operator must be the last operator in the query, and can only be used with queries that produce a single tabular data stream result. 
 The render operator does not modify data. It injects an annotation ("Visualization") into the result's extended properties. 
+
+* [isempty](https://learn.microsoft.com/en-us/azure/data-explorer/kusto/query/isemptyfunction)-Returns true if the argument is an empty string or is null.
+
+* [case](https://learn.microsoft.com/en-us/azure/data-explorer/kusto/query/casefunction)-Evaluates a list of predicates and returns the first result expression whose predicate is satisfied.
+If none of the predicates return true, the result of the else expression is returned. All predicate arguments must be expressions that evaluate to a boolean value. All then arguments and the else argument must be of the same type.
+
+* [top](https://learn.microsoft.com/en-us/azure/data-explorer/kusto/query/topoperator)
 
 https://learn.microsoft.com/en-us/azure/data-explorer/kusto/query/tutorial?pivots=azuredataexplorer#displaychartortable
 
@@ -419,32 +434,32 @@ enriched_flow_agg_1_min
 | where eventTimeWindowStart between (minTapp .. maxTapp)
 | summarize distinct_flowRecord_subscriberInfo_imsi=count_distinct(flowRecord_subscriberInfo_imsi) by startofday(eventTimeWindowStart), 
   flowRecord_dpiStringInfo_application=case(isempty(flowRecord_dpiStringInfo_application),"UNDETECTED", flowRecord_dpiStringInfo_application)
-| order by distinct_flowRecord_subscriberInfo_imsi desc//eventTimeWindowStart
+| order by distinct_flowRecord_subscriberInfo_imsi desc 
 | top 10 by distinct_flowRecord_subscriberInfo_imsi
 | render piechart
 ```
   
  
 ## Challenge 2, Query 1.8: Timecharts
-**User wanted to view flow records timechart for every 10 sec to get total volume in bytes where application is not empty ''.**
-Looking for slicing an enriched table (containing session and flow records joined aggregated view in 1 min) for total_volume_bytes in 1sec.
 
-* [bin] (https://docs.microsoft.com/en-us/azure/data-explorer/kusto/query/binfunction)
-* [summarize]
-* [render]-
+**User wanted to view flow records timechart for every 10 sec to get total volume in bytes and where the application column is empty '' then in those cases it should be marked as "UNDETECTED".**
+
+Looking for slicing an enriched table (containing session and flow records joined aggregated view in 1 min) for total_volume_bytes in 1sec.
+* [bin](https://docs.microsoft.com/en-us/azure/data-explorer/kusto/query/binfunction)
+* [toint](https://learn.microsoft.com/en-us/azure/data-explorer/kusto/query/tointfunction)
+* [render](https://learn.microsoft.com/en-us/azure/data-explorer/kusto/query/renderoperator?pivots=azuredataexplorer)
+* [isempty](https://learn.microsoft.com/en-us/azure/data-explorer/kusto/query/isemptyfunction)-Returns true if the argument is an empty string or is null.
+* [case](https://learn.microsoft.com/en-us/azure/data-explorer/kusto/query/casefunction)-Evaluates a list of predicates and returns the first result expression whose 
 
 ```
 all_flow_events
 | summarize total_volume_bytes=(sum (toint(flowRecord_dataStats_downLinkOctets)) + sum(toint(flowRecord_dataStats_upLinkOctets))) by bin(eventTime,10s)
-,flowRecord_dpiStringInfo_application=case(isempty(flowRecord_dpiStringInfo_application),"UNDETECTED", flowRecord_dpiStringInfo_application)|
-top 10 by total_volume_bytes
-|render timechart
+ , flowRecord_dpiStringInfo_application=case(isempty(flowRecord_dpiStringInfo_application),"UNDETECTED", flowRecord_dpiStringInfo_application)
+| top 10 by total_volume_bytes
+| render timechart
 ```
 
 Such kind of view:
-
-<img width="559" alt="image" src="https://user-images.githubusercontent.com/78459999/221203529-267e4750-30cd-4cbc-8050-c53a70263c00.png">
-
 
 <img width="597" alt="image" src="https://user-images.githubusercontent.com/78459999/221234303-357aea00-05a2-41af-b225-4b827108c6ce.png">
 
@@ -476,9 +491,11 @@ In the Pin to dashboard pane:
 6. Select the View dashboard after creation checkbox (if it's a new dashboard).
 7. Select Pin
 
+**User wanted to view above created queries on dashboard pages.**
+
 Screenshot of the Pin to dashboard pane.
 
- <img width="634" alt="image" src="https://user-images.githubusercontent.com/78459999/221242388-e5ebcc60-652d-4210-9398-f40b0e4818e9.png">
+ <img width="815" alt="image" src="https://user-images.githubusercontent.com/78459999/221936404-f361c2c1-dbec-476a-b7ca-7cf828ca5588.png">
 
 Reference:
 
