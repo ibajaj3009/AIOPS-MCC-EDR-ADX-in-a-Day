@@ -286,7 +286,6 @@ enriched_flow_agg_1_min
 |Expression	| Result|
 |----|----|
 |`bin(4.5,1)`	| 4.0|
-|`bin(time(16d),7d)` |	14d|
 |`bin(datetime(1970-05-11 13:45:07),1d)`|	datetime(1970-05-11)|
 
 * [extend](https://learn.microsoft.com/en-us/azure/data-explorer/kusto/query/extendoperator) - Create calculated columns and append them to the result set.
@@ -472,7 +471,8 @@ Azure Data Explorer is a fast and highly scalable data exploration service for l
 
 Pin a query from the query tab of the web UI.
 
-<img width="668" alt="image" src="https://user-images.githubusercontent.com/78459999/221235181-cf7c61ee-b7ae-44f8-8436-db440ebb51d6.png">
+<img width="132" alt="image" src="https://user-images.githubusercontent.com/78459999/221937579-a924597f-47ba-48df-a00e-959d9e9f3b01.png">
+
 
 
 To pin a query:
