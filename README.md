@@ -226,6 +226,8 @@ enriched_flow_agg_1_min
 
 **User is interested to view the records in 1min aggregated enriched flow table, where application is not empty and able to view only session id, uplinkOctets, downlink octets, application column values along with the event time window start and end details**
 
+<img width="471" alt="image" src="https://user-images.githubusercontent.com/78459999/221900494-15eb4acb-68b1-4cdd-80aa-231219082ff6.png">
+
 KQL queries can be used to filter data and return specific information. Now, you'll learn how to choose specific rows of data.
 
 [where](https://learn.microsoft.com/en-us/azure/data-explorer/kusto/query/whereoperator)- The where operator filters results that satisfy a certain condition. 
@@ -249,17 +251,21 @@ enriched_flow_agg_1_min
 
 ### Challenge 2, Query 1.2: Records aggregation
 
-**User is interested to view the sum of total volume bytes and bits for maximum and minimum event time window start for all the flow records in an enriched table on application level**
+**User is interested to view the sum of total volume bytes and bits for maximum and minimum event time window start for all the flow records in an enriched table in a single record**
+
+
+<img width="318" alt="image" src="https://user-images.githubusercontent.com/78459999/221898009-3d56ec12-1c86-46a8-982e-548f0df8fcd0.png">
+
 
 [Summarize](https://learn.microsoft.com/en-us/azure/data-explorer/kusto/query/summarizeoperator)-The input rows are arranged into groups having the same values of the *by* expressions. Then the specified aggregation functions are computed over each group, producing a row for each group. The result contains the *by* columns and also at least one column for each computed aggregate. (Some aggregation functions return multiple columns.)
 
 The result has as many rows as there are distinct combinations of *by* values (which may be zero). If there are no group keys provided, the result has a single record.
 
 To summarize over ranges of numeric values, use bin() to reduce ranges to discrete values.
-[bin](https://learn.microsoft.com/en-us/azure/data-explorer/kusto/query/sum-aggfunction)
-[Sum function](https://learn.microsoft.com/en-us/azure/data-explorer/kusto/query/sum-aggfunction)
-[Min function](https://learn.microsoft.com/en-us/azure/data-explorer/kusto/query/min-aggfunction)
-[Max function](https://learn.microsoft.com/en-us/azure/data-explorer/kusto/query/max-aggfunction)
+* [Sum function](https://learn.microsoft.com/en-us/azure/data-explorer/kusto/query/sum-aggfunction)
+* [Min function](https://learn.microsoft.com/en-us/azure/data-explorer/kusto/query/min-aggfunction)
+* [Max function](https://learn.microsoft.com/en-us/azure/data-explorer/kusto/query/max-aggfunction)
+* [project](https://learn.microsoft.com/en-us/azure/data-explorer/kusto/query/projectoperator)
 
 
 ```
@@ -272,19 +278,21 @@ enriched_flow_agg_1_min
 
 
 ### Challenge 2, Query 1.3: Time bins
-**While exploring more on dataset, user is now interested to drill down above query and check what would be volume of bytes and bits for each application in every 5 mins** 
+
+**While exploring more on dataset, user is now interested to drill down above query and check what would be volume of bytes and bits for each application in every 5 mins for above selected columns view** 
 
 * [bin](https://learn.microsoft.com/en-us/azure/data-explorer/kusto/query/binfunction) - The nearest multiple of roundTo below value. Null values, a null bin size, or a negative bin size will result in null.
-
-* [extend](https://learn.microsoft.com/en-us/azure/data-explorer/kusto/query/extendoperator) - Create calculated columns and append them to the result set.
-
-* [project](https://learn.microsoft.com/en-us/azure/data-explorer/kusto/query/projectoperator)
 
 |Expression	| Result|
 |----|----|
 |`bin(4.5,1)`	| 4.0|
 |`bin(time(16d),7d)` |	14d|
 |`bin(datetime(1970-05-11 13:45:07),1d)`|	datetime(1970-05-11)|
+
+* [extend](https://learn.microsoft.com/en-us/azure/data-explorer/kusto/query/extendoperator) - Create calculated columns and append them to the result set.
+
+* [project](https://learn.microsoft.com/en-us/azure/data-explorer/kusto/query/projectoperator)
+
 
 ```
 enriched_flow_agg_1_min 
@@ -298,16 +306,22 @@ enriched_flow_agg_1_min
 ```
   
 View should have below columns:
+
 <img width="444" alt="image" src="https://user-images.githubusercontent.com/78459999/220405408-b6d28068-fda6-4d1b-ba82-3db323ca10c3.png">
 
 
 
 
-### Challenge 2, Query 1.4: Selecting top applications
-**User wanted to gain insights on the number of records which got aggregated in 5 min view of above queries while getting a view on total volume on application level and sort total volume in descending order while viewing data (there is already column name in enriched view of flow which had record count value on 1 min view) for top 5 applications according to the total volume in bytes.**
+### Challenge 2, Query 1.4: Selecting top applications by volume after sorting volume in descending order
+
+**User wanted to gain insights on the number of records which got aggregated in 5 min view of above queries while getting a view on total volume on application level and sort total volume in descending order while viewing data (there is already column name in enriched view of flow which have record count value on 1 min view) for top 10 applications according to the total volume in bytes.**
+
+<img width="772" alt="image" src="https://user-images.githubusercontent.com/78459999/221907200-8604cb77-3767-42a7-8b54-93dccdb46019.png">
 
 * [sort](https://learn.microsoft.com/en-us/azure/data-explorer/kusto/query/sort-operator) - Sorts the rows of the input table into order by one or more columns.
-* [sum](https://learn.microsoft.com/en-us/azure/data-explorer/kusto/query/topoperator) - top-Returns the first N records sorted by the specified columns. 
+* [top](https://learn.microsoft.com/en-us/azure/data-explorer/kusto/query/topoperator)-Returns the first N records sorted by the specified columns. 
+* [sum](https://learn.microsoft.com/en-us/azure/data-explorer/kusto/query/topoperator) 
+
 
 ```
 enriched_flow_agg_1_min 
@@ -323,7 +337,9 @@ enriched_flow_agg_1_min
 | project minTapp,maxTapp,total_volume_bits, total_volume_bytes, flowRecord_dpiStringInfo_application, recordcount_in5min
 ```
 
+
 ### Challenge 2, Query 1.5: Count distinct values
+
 **One of an other user wanted to view the active distinct users count in a day for last 7 days at application level.**
 
 * [count_distinct](https://learn.microsoft.com/en-us/azure/data-explorer/kusto/query/count-distinct-aggfunction) - Counts unique values specified by the scalar expression per summary group, or the total number of unique values if the summary group is omitted.
