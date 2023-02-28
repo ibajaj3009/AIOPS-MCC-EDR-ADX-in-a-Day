@@ -291,12 +291,13 @@ View should have below columns:
 
 
 
-### Challenge 2: Query 1.4 : User wanted to gain insights on the number of records which got aggregrated in 5 min view of above queries while getting a view on total volume on application level and sort total volume in descending order while viewing data (there is already column name in enriched view of flow which had record count value on 1 min view) for top 5 applications according to the total volume in bytes.
+### Challenge 2, Query 1.4: Selecting top applications
+**User wanted to gain insights on the number of records which got aggregated in 5 min view of above queries while getting a view on total volume on application level and sort total volume in descending order while viewing data (there is already column name in enriched view of flow which had record count value on 1 min view) for top 5 applications according to the total volume in bytes.**
 
-sort- Sorts the rows of the input table into order by one or more columns.https://learn.microsoft.com/en-us/azure/data-explorer/kusto/query/sort-operator
+* [sort](https://learn.microsoft.com/en-us/azure/data-explorer/kusto/query/sort-operator) - Sorts the rows of the input table into order by one or more columns.
+* [sum](https://learn.microsoft.com/en-us/azure/data-explorer/kusto/query/topoperator) - top-Returns the first N records sorted by the specified columns. 
 
-sum- top-Returns the first N records sorted by the specified columns. https://learn.microsoft.com/en-us/azure/data-explorer/kusto/query/topoperator
-
+```
 enriched_flow_agg_1_min 
 | summarize maxTapp= max(eventTimeWindowStart),
   total_volume_bytes=(sum(flowRecord_dataStats_downLinkOctets) + sum(flowRecord_dataStats_upLinkOctets)),
@@ -308,21 +309,19 @@ enriched_flow_agg_1_min
 | sort by total_volume_bytes desc
 | top 5 by total_volume_bytes 
 | project minTapp,maxTapp,total_volume_bits, total_volume_bytes, flowRecord_dpiStringInfo_application, recordcount_in5min
-  
+```
 
-### Challenge 2: Query 1.5 : One of an other user wanted to view the active distinct users count in a day for last 7 days at application level.
+### Challenge 2, Query 1.5: Count distinct values
+**One of an other user wanted to view the active distinct users count in a day for last 7 days at application level.**
 
-[count_distinct](https://learn.microsoft.com/en-us/azure/data-explorer/kusto/query/count-distinct-aggfunction)-Counts unique values specified by the scalar expression per summary group, or the total number of unique values if the summary group is omitted.
-
-startofday-Returns the start of the day containing the date, shifted by an offset, if provided.
-
-[format_datetime](https://learn.microsoft.com/en-us/azure/data-explorer/kusto/query/format-datetimefunction)-Formats a datetime according to the provided format.
-
-order by-
-
-project-
+* [count_distinct](https://learn.microsoft.com/en-us/azure/data-explorer/kusto/query/count-distinct-aggfunction) - Counts unique values specified by the scalar expression per summary group, or the total number of unique values if the summary group is omitted.
+* [startofday]() - Returns the start of the day containing the date, shifted by an offset, if provided.
+* [format_datetime](https://learn.microsoft.com/en-us/azure/data-explorer/kusto/query/format-datetimefunction) - Formats a datetime according to the provided format.
+* [order by]() -
+* [project](https://learn.microsoft.com/en-us/azure/data-explorer/kusto/query/projectoperator)
 
 
+```
 enriched_flow_agg_1_min 
 | summarize maxTapp= max(eventTimeWindowStart), distinct_flowRecord_subscriberInfo_imsi= dcount(flowRecord_subscriberInfo_imsi) by startofday(eventTimeWindowStart),flowRecord_dpiStringInfo_application
 | extend minTapp=maxTapp-7d
@@ -332,7 +331,7 @@ enriched_flow_agg_1_min
     format_datetime(eventTimeWindowStart, "yyyy-MM-dd"),
     distinct_flowRecord_subscriberInfo_imsi,
     flowRecord_dpiStringInfo_application;
-
+```
 
 
 ### Challenge 2: Query 1.6: Try to write the above query by using variables with 'let' to optimize the main query
