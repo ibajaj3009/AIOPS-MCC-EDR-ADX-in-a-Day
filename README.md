@@ -213,6 +213,7 @@ enriched_flow_agg_1_min
 
 
 ### Challenge 2, Query 1.0: Schema
+
 **User is interested to view the schema of 1min aggregated view of enriched flow table.**
 
 ```
@@ -222,13 +223,14 @@ enriched_flow_agg_1_min
 
 
 ### Challenge 2, Query 1.1: Records selection
-**User is interested to view the records in 1min aggregated enriched flow table, where application is not empty and able to view only session id, uplinkOctets, downlink octets value with event time window start and end details**
+
+**User is interested to view the records in 1min aggregated enriched flow table, where application is not empty and able to view only session id, uplinkOctets, downlink octets, application column values along with the event time window start and end details**
 
 KQL queries can be used to filter data and return specific information. Now, you'll learn how to choose specific rows of data.
 
-The where operator filters results that satisfy a certain condition. 
+[where](https://learn.microsoft.com/en-us/azure/data-explorer/kusto/query/whereoperator)- The where operator filters results that satisfy a certain condition. 
 
-Project operator is used to get desired columns: [project operator](https://learn.microsoft.com/en-us/azure/data-explorer/kusto/query/projectoperator)
+[project operator](https://learn.microsoft.com/en-us/azure/data-explorer/kusto/query/projectoperator)-Project operator is used to get desired columns.
 
 ```       
 enriched_flow_agg_1_min        
@@ -236,7 +238,7 @@ enriched_flow_agg_1_min
         | project eventTimeWindowStart,eventTimeWindowEnd, flowRecord_keys_sessionId,flowRecord_dataStats_upLinkOctets, flowRecord_dataStats_downLinkOctets,  flowRecord_dpiStringInfo_application
 ```      
 
-The 'take' operator samples any number of records from our table without any order. In the above example, we have asked to provide 10 random records.
+The [take](https://learn.microsoft.com/en-us/azure/data-explorer/kusto/query/takeoperator) operator samples any number of records from our table without any order. In the above example, also provide 10 random records with 'take'operator.
 ```
 enriched_flow_agg_1_min        
         | where flowRecord_dpiStringInfo_application != ''
@@ -246,18 +248,19 @@ enriched_flow_agg_1_min
 
 
 ### Challenge 2, Query 1.2: Records aggregation
-**User is interested to view the sum of total volume bytes and bits for maximum and minimum event time window start for all the flow records in enriched table on application level**
 
-Summarize. The input rows are arranged into groups having the same values of the *by* expressions. Then the specified aggregation functions are computed over each group, producing a row for each group. The result contains the *by* columns and also at least one column for each computed aggregate. (Some aggregation functions return multiple columns.)
+**User is interested to view the sum of total volume bytes and bits for maximum and minimum event time window start for all the flow records in an enriched table on application level**
+
+[Summarize](https://learn.microsoft.com/en-us/azure/data-explorer/kusto/query/summarizeoperator)-The input rows are arranged into groups having the same values of the *by* expressions. Then the specified aggregation functions are computed over each group, producing a row for each group. The result contains the *by* columns and also at least one column for each computed aggregate. (Some aggregation functions return multiple columns.)
 
 The result has as many rows as there are distinct combinations of *by* values (which may be zero). If there are no group keys provided, the result has a single record.
+
 To summarize over ranges of numeric values, use bin() to reduce ranges to discrete values.
 [bin](https://learn.microsoft.com/en-us/azure/data-explorer/kusto/query/sum-aggfunction)
-
-[top](https://learn.microsoft.com/en-us/azure/data-explorer/kusto/query/topoperator)
 [Sum function](https://learn.microsoft.com/en-us/azure/data-explorer/kusto/query/sum-aggfunction)
 [Min function](https://learn.microsoft.com/en-us/azure/data-explorer/kusto/query/min-aggfunction)
 [Max function](https://learn.microsoft.com/en-us/azure/data-explorer/kusto/query/max-aggfunction)
+
 
 ```
 enriched_flow_agg_1_min 
