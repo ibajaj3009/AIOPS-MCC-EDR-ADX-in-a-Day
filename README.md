@@ -27,21 +27,20 @@ ADX capabilities are extended by other services built on its powerful query lang
 
 # Scenario
 
-
-Contoso is an telecommunication enterprise company that is looking to gain some valuable insights from MCC EDR dataset which are getting generated at on premise MCC MSF server.They are looking for an option to stream the data on Azure Data Services and build the dashboard and reports. For that, they had deployed AIOps solution in their Azure environment for ingestion in delta lake format and streamed cleaned data in Azure Data Explorer Service with an enriched table having 1min aggregrated view of session and flow tables.
+Contoso is a telecommunication enterprise company that is looking to gain some valuable insights from MCC EDR dataset which are getting generated at on premise MCCs. They are looking for an option to stream the data to Azure Data Services and build dashboards and reports. For that, they had deployed AIOps solution in their Azure environment for ingestion in delta lake format and streamed cleaned data to Azure Data Explorer Service with an enriched table having 1min aggregated view of session and flow tables.
 
 
 <img width="793" alt="image" src="https://user-images.githubusercontent.com/78459999/220313676-819aea26-8c3d-43a9-9b11-417b1b983bbe.png">
 
 
 
-One of the Contoso's Business Analyst planning to explore data in ADX and check its ingestion features, explore streaming data in ADX for enriched flow table and looking for the below usecases to be built on dashboards:
+One of the Contoso's Business Analyst plans to explore data in ADX and to check its ingestion features, explore streaming data to ADX for enriched flow table and looks for the below usecases to be built on dashboards:
  
-1. Total volume computation at Application level.
-2. Total active users per day for top 10 application.
+1. Total volume computation at application level.
+2. Total active users per day for top 10 applications.
 
-This workshop walks through the steps in designing, creating, and configuring Azure Data Explorer clusters keeping in mind these requirements.
-Once the cluster is deployed, this workshop enlists the steps to ingest data into ADX databases and tables using One Click ingestion for sample run.
+This workshop walks through the steps of designing, creating, and configuring Azure Data Explorer clusters keeping these requirements in mind.
+Once the cluster is deployed, this workshop lists the steps to ingest data into ADX databases and tables using One Click ingestion for a sample run.
 
 
 ### Pre-requisites
