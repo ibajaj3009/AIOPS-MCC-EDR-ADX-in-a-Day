@@ -60,11 +60,11 @@ Generally, when starting with Azure Data Explorer, you will follow the following
 Ready to go? Click on the below links to start the challenges
 
 
-## Lab 1: Cluster Creation, Data Ingestion, Exploration and Visualization
+# Lab 1: Cluster Creation, Data Ingestion, Exploration and Visualization
 
 Each challenge has a set of tasks that need to be completed in order to move on to the next challenge
 
-## Challenge 1: Create an ADX cluster and load Data from Azure Storage(the sample data to explore ADX features with one click ingestion.AIOps handles ingestion)
+## Challenge 1: Create an ADX cluster and load data from Azure Storage (the sample data to explore ADX features with one click ingestion. AIOps handles ingestion)
 To use Azure Data Explorer (ADX), you first have to create a free ADX cluster, and create one or more databases in that cluster. Each database has tables. Then you can ingest data into a database so that you can run queries against it.
 
 In this Challenge, you will create a Free cluster and a database. You will run simple KQL query in Kusto Web Explorer (KWE UI).
@@ -82,10 +82,10 @@ Create your free cluster and database here: https://aka.ms/kustofree.
 
 On your My Cluster page, you'll see the following:
 
-Your cluster's name, the option to upgrade to a full cluster, and the option to delete the cluster.
-Cluster details like: cluster's location, and URI links for connecting to your cluster via APIs or other tools.
-Quick actions you can take to get started with your cluster.
-A list of databases in your cluster.
+* Your cluster's name, the option to upgrade to a full cluster, and the option to delete the cluster.
+* Cluster details like: cluster's location, and URI links for connecting to your cluster via APIs or other tools.
+* Quick actions you can take to get started with your cluster.
+* A list of databases in your cluster.
 
 If you already have a free cluster and just want to create a new database for this lab, use the Create button in the Create database tile.
 
