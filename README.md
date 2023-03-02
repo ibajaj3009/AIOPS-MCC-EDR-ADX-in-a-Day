@@ -35,7 +35,7 @@ ADX capabilities are extended by other services built on its powerful query lang
 Contoso is a telecommunication enterprise company that is looking to gain some valuable insights from MCC EDR dataset which are getting generated at on premise MCCs. They are looking for an option to stream the data to Azure Data Services and build dashboards and reports. For that, they had deployed AIOps solution in their Azure environment for ingestion in delta lake format and streamed cleaned data to Azure Data Explorer Service with an enriched table having 1min aggregated view of session and flow tables.
 
 
-<img width="793" alt="image" src="https://user-images.githubusercontent.com/78459999/220313676-819aea26-8c3d-43a9-9b11-417b1b983bbe.png">
+<img width="818" alt="image" src="https://user-images.githubusercontent.com/78459999/222466274-9abf51e7-4e36-4cf5-86d9-638475224679.png">
 
 
 
