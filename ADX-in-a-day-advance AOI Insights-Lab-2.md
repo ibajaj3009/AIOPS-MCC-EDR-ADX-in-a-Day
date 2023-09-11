@@ -3,7 +3,7 @@
 Welcome to Hands-On Workshop on MCC-EDR Azure Data Explorer. Azure Data Explorer and Kusto queries might be overwhelming in the beginning, but this challenge can be overcome with practice!
 
 
-# Lab 2: Cluster Creation, Data Ingestion, Exploration and Visualization
+# Lab 2: AOI Advance Exploration and Visualization
 This Lab will focus on enabling the participants to write some advance KQL queries and maintain dashboard for visualization and manage accesses
 
 | Challenge Description | Estimated Time|
