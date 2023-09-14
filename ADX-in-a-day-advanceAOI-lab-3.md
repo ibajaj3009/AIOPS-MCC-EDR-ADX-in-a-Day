@@ -1,4 +1,4 @@
-### a. Scenarios based with anomaly detection and finding the warnings on three AOI KPIs.
+## a. Scenarios based with anomaly detection and finding the warnings on three AOI KPIs.
 
 The applicable time series functions are based on a robust well-known decomposition model, where each original time series is decomposed into seasonal, trend, and residual components. 
 Anomalies are detected by outliers on the residual component, while forecasting is done by extrapolating the seasonal and trend components.
@@ -13,7 +13,7 @@ Univariate analysis is simpler, faster, and easily scalable and is applicable to
 however, there are some cases where it might miss anomalies that can only be detected by analyzing multiple metrics at the same time which we will discuss in the coming scenarios.
 
 
-## a. User is interested to know total downlink packet loss % anomaly detection for the whole network.
+### a. User is interested to know total downlink packet loss % anomaly detection for the whole network.
 
 Make_list()-Returns a dynamic array of all the values of expr in the group. If the input to the summarize operator isn't sorted, the order of 
 elements in the resulting array is undefined. If the input to the summarize operator is sorted, the order of elements in the resulting array tracks that of the input.
@@ -36,7 +36,7 @@ flowRecord_dataStats_downLinkDropPackets = sum(flowRecord_dataStats_downLinkDrop
 | project-away scores
 ```
 
-## b. Users are interested to know total downlink packet loss % anomaly detection for the all the set of locations by LGA.
+### b. Users are interested to know total downlink packet loss % anomaly detection for the all the set of locations by LGA.
 
 ```
 materialized_view('enriched_flow_cell_session_http_5m_agg') | where eventTimeFlow between (_start_time_parameter..(_end_time_parameter-totimespan(_granularity_parameter))) | where flowRecord_flowRecordType == "EDR_STOP_RECORD" 
@@ -55,8 +55,9 @@ flowRecord_dataStats_downLinkDropPackets = sum(flowRecord_dataStats_downLinkDrop
 | order by ['Anomaly Count'] desc
 ```
 
-## c. Users are interested to know total downlink packet loss % for the drillthrough cell from the list of cell of section b.
+### c. Users are interested to know total downlink packet loss % for the drillthrough cell from the list of cell of section b.
 
+```
 materialized_view('enriched_flow_cell_session_http_5m_agg') 
 |where eventTimeFlow between (_start_time_parameter..(_end_time_parameter-totimespan(_granularity_parameter))) 
 | where flowRecord_flowRecordType == "EDR_STOP_RECORD" 
@@ -71,8 +72,9 @@ and (flowRecord_dataStats_downLinkPackets + flowRecord_dataStats_downLinkDropPac
 | extend ['Max Anomaly Score']= array_sum(array_slice(array_sort_desc(series_abs(scores)), 0, 0)) 
 | extend ['Anomaly Count'] = array_sum(series_abs(Flagged)) 
 | project ['Cell Tower']=start_cell, ['Anomaly Count'], ['Max Anomaly Score'] | order by ['Anomaly Count'] desc
+```
 
-## Multivariate Anomaly Detection
+### Multivariate Anomaly Detection
 Let’s see an example of missing anomalies when using univariate analysis. Suppose we monitor two car metrics: speed and engine rpm. Having 0 for specific metric is not anomalous – either the car doesn’t move, or its engine is off. But measuring speed of 40 km/hour with 0 rpm is definitely anomalous - the car might be sliding or pulled. To detect these types of anomalies we need to use multivariate analysis methods that jointly analyze time series of multiple metrics.
 
 We are happy to introduce three new UDFs (User Defined Functions) that apply different multivariate models on ADX time series. These functions are based on models from scikit-learn (the most common Python ML library), taking advantage of ADX capability to run inline Python as part of the KQL query. These are the new functions:
@@ -173,7 +175,7 @@ materialized_view('enriched_flow_cell_session_http_5m_agg')
 ## Summary
 Time series-based anomaly detection is a very powerful method for health monitoring of cloud resources and IoT devices. Many metrics are collected and can be analyzed for anomalies. ADX has built in capabilities for applying univariate anomaly detection for thousands of time series in near real time. Further, anomalies that were found on different metrics can be time based correlated to increase their score/confidence. In most cases this method is effective to detect issues; however, for some scenarios there might be a need for a true multivariate model, jointly analyzing multiple metrics. This can be achieved now in ADX using the new Python based multivariate anomaly detection functions. You are welcome to try these functions and share your feedback with us, as we continue improving and adding more multivariate capabilities.
 
-### b.	Scenarios based on forecasting(concepts)
+### b.	Scenarios based on forecasting(concept)
 
 The function series_decompose_forecast() predicts future values of a set of time series. This function calls series_decompose() to build the decomposition model and then, for each time series, extrapolates the baseline component into the future.
 
@@ -189,7 +191,7 @@ demo_make_series2
 | render timechart with(title='Web app. traffic of a month, forecasting the next week by Time Series Decomposition')
 ```
 
-Dashboard creation from all set of above queries:
+### Dashboard creation from all set of above queries:
 
 <img width="854" alt="image" src="https://github.com/ibajaj3009/AIOPS-MCC-EDR-ADX-in-a-Day/assets/78459999/7f6bb74e-0fa4-496e-b5db-058b918d7bfb">
 
