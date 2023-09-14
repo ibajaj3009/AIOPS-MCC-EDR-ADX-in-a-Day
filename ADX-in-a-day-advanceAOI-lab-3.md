@@ -18,7 +18,7 @@ however, there are some cases where it might miss anomalies that can only be det
 Make_list()-Returns a dynamic array of all the values of expr in the group. If the input to the summarize operator isn't sorted, the order of 
 elements in the resulting array is undefined. If the input to the summarize operator is sorted, the order of elements in the resulting array tracks that of the input.
 
-# (Flagged, scores, Baseline) = series_decompose_anomalies(['Downlink Packet Loss (%)'], 3, -1)
+#### (Flagged, scores, Baseline) = series_decompose_anomalies(['Downlink Packet Loss (%)'], 3, -1)
 
 make_list() (aggregation function) - Azure Data Explorer | Microsoft Learn
 
