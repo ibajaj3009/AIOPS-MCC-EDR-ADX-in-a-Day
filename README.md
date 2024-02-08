@@ -7,9 +7,15 @@ This Lab will focus on enabling the participants to create a free ADX cluster an
 
 | Challenge Description | Estimated Time|
 |-----------------------|----------------|
-|**Challenge 1.** Create a free ADX cluster and load data from Azure Storage | 25 Min |
-|**Challenge 2.** Starting with the basics of KQL 1 and Advance KQL Queries Data Exploration|1 hour |
-|**Challenge 3.** Visualization through queries and dashboards | 1hour|
+|**Challenge 1.**  What is KQL? Starting with the basics of KQL with creation of AOI queries | 1hr 30 min |
+|**Challenge 2.** KQL Visualization and Advance KQL Queries Data Exploration| 30 min |
+|**Challenge 3.** Visualization through queries and dashboards | 30 min |
+
+Challenge Description	Estimated Time
+Challenge 1. What is KQL? Starting with the basics of KQL with creation of AOI queries	30min
+Challenge 2.  Advance AOI KQL Queries Data Exploration with hands on experience	1hour 15min
+Challenge 3. Visualization through queries and dashboards	45 min
+
 
 Each challenge has a set of tasks that needs to be completed in order to move on to the next challenge.
 
