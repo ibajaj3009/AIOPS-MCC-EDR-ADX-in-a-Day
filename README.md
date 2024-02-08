@@ -268,11 +268,15 @@ User is interested to know top 5 devices in last 4 days.
 ***Performance Optimization Best Practices***: - (https://learn.microsoft.com/en-us/azure/data-explorer/kusto/query/best-practices)
 
 summarize operator Use the hint.shufflekey= when the group by keys of the summarize operator are with high cardinality. High cardinality is ideally above 1 million.
+
 join operator-Select the table with the fewer rows to be the first one (left-most in query).
-Use in instead of left semi join for filtering by a single column.
+
 Join when left side is small and right side is large Use hint.strategy=broadcast Small refers to up to 100MB of data.
+
 Join when right side is small and left side is large Use the lookup operator instead of the join operator If the right side of the lookup is larger than several tens of MBs, the query will fail.
+
 Join when both sides are too large Use hint.shufflekey= Use when the join key has high cardinality.
+
 Reduce the amount of data being queried.
 
 <img width="765" alt="image" src="https://github.com/ibajaj3009/AIOPS-MCC-EDR-ADX-in-a-Day/assets/78459999/8420ea48-8bce-4007-a388-13952eeea461">
