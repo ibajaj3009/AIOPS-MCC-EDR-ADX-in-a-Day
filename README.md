@@ -21,7 +21,9 @@ Each challenge has a set of tasks that needs to be completed in order to move on
 
 ## Scenario
 Contoso is a telecommunication enterprise company that is looking to gain some valuable insights from MCC EDR dataset which are getting generated at on premise MCCs. They are looking for an option to stream the data to Azure Data Services and build dashboards and reports. For that, they had deployed Azure Operator Insights solution for ingestion, digestion and streaming cleaned data through KQL Service with an enriched table having 1hr aggregated view of session, flow, cell, and http tables.
- 
+
+ ![image](https://github.com/ibajaj3009/AIOPS-MCC-EDR-ADX-in-a-Day/assets/78459999/6c1fdaab-ca61-43fe-b292-51e4e7bd56c9)
+
 
 One of the Contoso's Business Analyst plans to explore data in Azure Operator Insight KQL Service, he used enriched flow table and looks for the below usecases to be built on dashboards:
 1.	Total volume computation at application level.
