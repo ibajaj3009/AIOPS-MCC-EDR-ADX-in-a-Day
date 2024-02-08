@@ -42,18 +42,23 @@ Expected Learning Outcomes:
 
 ## What is a Kusto query?
 A Kusto query is a read-only request to process data and return results. The request is stated in plain text that's easy to read, author, and automate. A Kusto query has one or more query statements and returns data in a tabular or graph format.
+
 AOI service uses the Kusto Query Language service, which is an expressive, intuitive, and highly productive query language. It offers a smooth transition from simple one-liners to complex data processing scripts, and supports querying structured, semi-structured, and unstructured (text search) data. Use the web application to run, review, and share queries and results. You can also send queries programmatically to a REST API endpoint.
+
 KQL Service Uses different visual displays of your data in the native Azure Data Explorer Dashboards. You can also display your results using connectors to some of the leading visualization services, such as Power BI and Grafana.
 
 
 ## What is a tabular statement?
 1.	The most common kind of query statement is a tabular expression statement. Both its input and its output consist of tables or tabular datasets.
+   
 2.	Tabular statements contain zero or more operators. Each operator starts with a tabular input and returns a tabular output. Operators are sequenced by a pipe (|). Data flows, or is piped, from one operator to the next. The data is filtered or manipulated at each step and then fed into the following step.
+   
 3.	It's like a funnel, where you start out with an entire data table. Each time the data passes through another operator, it's filtered, rearranged, or summarized. Because the piping of information from one operator to another is sequential, the query's operator order is important. At the end of the funnel, you're left with a refined output. Let's look at an example query:
 
+````
 enriched_flow_cell_session_http
 | take 10 
-
+````
 This query has a single tabular expression statement. The statement begins with a reference to the table and contains the operators take. Each operator is separated by a pipe.
 
 ### References:
