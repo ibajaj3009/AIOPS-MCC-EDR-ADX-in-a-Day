@@ -151,7 +151,7 @@ enriched_flow_cell_session_http_1h_agg
 
 ## Challenge 1, Query 1.3: Time bins and let
 
-**While exploring more on dataset, user is now interested to drill down above query and check what would be volume of bytes and bits for each application in every 5 mins for above selected columns view** 
+**While exploring more on dataset, user is now interested to drill down above query and check what would be volume in bytes for each application and application category per day for last 7 days.** 
 
 * [bin](https://learn.microsoft.com/en-us/azure/data-explorer/kusto/query/binfunction) - The nearest multiple of roundTo below value. Null values, a null bin size, or a negative bin size will result in null.
 
@@ -169,8 +169,10 @@ enriched_flow_cell_session_http_1h_agg
 
 Try to write the above query by using variables with 'let' to optimize the main query
 Declaring variables and using 'let' statements
+
 You can use the 'let' statement to set a variable name equal to an expression or a function, or to create views (virtual, temporary, tables based on the result-set of another KQL query).
 let statements are useful for:
+
 •	Breaking up a complex expression into multiple parts, each represented by a variable.
 •	Defining constants outside of the query body for readability.
 •	Defining a variable once and using it multiple times within a query.
